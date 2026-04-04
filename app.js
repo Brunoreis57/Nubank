@@ -1,4 +1,3 @@
-[ignoring loop detection]
 const transactions = [
     { date: '01 Abr', items: [
         { title: 'Matheus Tadeo Zilmann Da Silva', time: '19:47 · Pix', amount: '+ R$ 400,00', type: 'pix-in' }
