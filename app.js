@@ -4,7 +4,6 @@ const transactions = [
         { title: 'Matheus Tadeo Zilmann Da Silva', time: '19:47 · Pix', amount: '+ R$ 400,00', type: 'pix-in' }
     ] },
     { date: '31 Mar', items: [
-        { title: 'Isabela Santos Siqueira De Carvalho', time: '00:38 · Pix', amount: 'R$ 200,00', type: 'pix-out' },
         { title: 'Vitor Ferrari', time: '00:37 · Pix', amount: '+ R$ 200,00', type: 'pix-in' }
     ] },
     { date: '29 Mar', items: [
@@ -14,11 +13,9 @@ const transactions = [
         { title: 'Mz Transportes Ltda', time: '13:24 · Pix', amount: 'R$ 3,00', type: 'pix-out' },
         { title: 'Mz Transportes Ltda', time: '12:56 · Pix', amount: 'R$ 5,00', type: 'pix-out' },
         { title: 'Mario Cesar Machado Junior', time: '12:18 · Pix', amount: 'R$ 90,00', type: 'pix-out' },
-        { title: 'Agendamento cancelado', time: 'NEON PAGAMENTOS SA', amount: 'R$ 50,00', type: 'canceled' },
         { title: 'Rodrigo Dias Damasceno', time: '15:07 · Pix', amount: '+ R$ 80,00', type: 'pix-in' }
     ] },
     { date: '20 Mar', items: [
-        { title: 'Mori Da Praia', time: '23:40 · Pix', amount: 'R$ 363,00', type: 'pix-out' },
         { title: 'Nathalia Marina Schmitt Carpin', time: '15:33 · Pix', amount: 'R$ 4.000,00', type: 'pix-out' },
         { title: 'Matheus Tadeo Zilmann Da Silva', time: '15:32 · Pix', amount: 'R$ 5.000,00', type: 'pix-out' }
     ] },
