@@ -1,31 +1,62 @@
+[ignoring loop detection]
 const transactions = [
     { date: '01 Abr', items: [
-
         { title: 'Matheus Tadeo Zilmann Da Silva', time: '19:47 · Pix', amount: '+ R$ 400,00', type: 'pix-in' }
     ] },
     { date: '31 Mar', items: [
         { title: 'Vitor Ferrari', time: '00:37 · Pix', amount: '+ R$ 200,00', type: 'pix-in' }
     ] },
     { date: '29 Mar', items: [
-        { title: 'Vitor Ferrari', time: '22:17 · Pix', amount: '+ R$ 0,01', type: 'pix-in' },
-        { title: 'Mz Transportes Ltda', time: '17:37 · Pix', amount: '+ R$ 2,00', type: 'pix-in' },
-        { title: 'Mz Transportes Ltda', time: '14:50 · Pix', amount: '+ R$ 5,00', type: 'pix-in' },
-        { title: 'Mz Transportes Ltda', time: '13:24 · Pix', amount: 'R$ 3,00', type: 'pix-out' },
-        { title: 'Mz Transportes Ltda', time: '12:56 · Pix', amount: 'R$ 5,00', type: 'pix-out' },
-        { title: 'Mario Cesar Machado Junior', time: '12:18 · Pix', amount: 'R$ 90,00', type: 'pix-out' },
-        { title: 'Rodrigo Dias Damasceno', time: '15:07 · Pix', amount: '+ R$ 80,00', type: 'pix-in' }
+        { title: 'Rodrigo Dias Damasceno', time: '15:07 · Pix', amount: '+ R$ 80,00', type: 'pix-in' },
+        { title: 'Consumidor Positivo Ltda', time: '02:00 · Pix', amount: 'R$ 50,00', type: 'pix-out' },
+        { title: 'Vitor Ferrari', time: '22:17 · Pix', amount: '+ R$ 0,01', type: 'pix-in' }
+    ] },
+    { date: '28 Mar', items: [
+        { title: 'Bmp Sociedade De Credito Direto...', time: '22:35 · Pix', amount: '+ R$ 50,00', type: 'pix-in' },
+        { title: 'Isabela Santos Siqueira De Carvalho', time: '15:30 · Pix', amount: 'R$ 200,00', type: 'pix-out' },
+        { title: 'Limite convertido em saldo', time: 'Usando limite do cartão', amount: 'R$ 65,00', type: 'pix-out' }
+    ] },
+    { date: '27 Mar', items: [
+        { title: 'Alice Regina Cruz', time: '07:00 · Pix', amount: 'R$ 1.200,00', type: 'pix-out' },
+        { title: 'Mv Centro Automotivo E Barb...', time: '06:59 · Pix', amount: '+ R$ 1.200,00', type: 'pix-in' }
+    ] },
+    { date: '26 Mar', items: [
+        { title: 'Ibis Sao Paulo Congonh', time: '21:21 · Débito', amount: 'R$ 36,00', type: 'bill' },
+        { title: 'Smart Home Comercio E Locacao...', time: '08:55 · Pix', amount: 'R$ 12,00', type: 'pix-out' },
+        { title: 'Banco Pan', time: '08:37 · Boleto', amount: 'R$ 151,63', type: 'bill' }
+    ] },
+    { date: '24 Mar', items: [
+        { title: 'Isabela Santos Siqueira De Carvalho', time: '15:30 · Pix', amount: 'R$ 250,00', type: 'pix-out' }
+    ] },
+    { date: '23 Mar', items: [
+        { title: 'Ciapark Estacionamento', time: '13:39 · Débito', amount: 'R$ 3,00', type: 'bill' },
+        { title: 'DesfrutarAVida', time: '00:55 · Débito', amount: 'R$ 13,55', type: 'bill' }
+    ] },
+    { date: '21 Mar', items: [
+        { title: 'Drogarias Ultra Popular', time: '20:12 · Débito', amount: 'R$ 25,03', type: 'bill' },
+        { title: 'Farma Vida', time: '13:22 · Pix', amount: 'R$ 56,33', type: 'pix-out' }
     ] },
     { date: '20 Mar', items: [
+        { title: 'Parcela paga', time: 'Renegociação', amount: 'R$ 154,44', type: 'bill' },
+        { title: 'Jose Adailson Dos Santos', time: '19:22 · Pix', amount: 'R$ 50,00', type: 'pix-out' },
         { title: 'Nathalia Marina Schmitt Carpin', time: '15:33 · Pix', amount: 'R$ 4.000,00', type: 'pix-out' },
+        { title: 'Pagamento da fatura', time: '15:32', amount: 'R$ 331,82', type: 'bill' },
         { title: 'Matheus Tadeo Zilmann Da Silva', time: '15:32 · Pix', amount: 'R$ 5.000,00', type: 'pix-out' }
     ] },
-    { date: '13 Fev', items: [
-        { title: 'Matheus Tadeo Zilmann Da Silva', time: '13:10 · Pix', amount: 'R$ 9.155,21', type: 'pix-out' },
-        { title: 'Aurea Estetica Avancada', time: '13:09 · Pix', amount: '+ R$ 9.151,00', type: 'pix-in' }
+    { date: '23 Fev', items: [
+        { title: 'Matheus Tadeo Zilmann Da Silva', time: '21:58 · Pix', amount: '+ R$ 50,00', type: 'pix-in' },
+        { title: 'Droga Raia', time: '15:34 · Pix', amount: 'R$ 21,18', type: 'pix-out' }
     ] },
-    { date: '06 Fev', items: [
-        { title: 'Matheus Tadeo Zilmann Da Silva', time: '15:10 · Pix', amount: 'R$ 18.303,00', type: 'pix-out' },
-        { title: 'Aurea Estetica Avancada', time: '15:07 · Pix', amount: '+ R$ 18.302,00', type: 'pix-in' }
+    { date: '20 Fev', items: [
+        { title: 'Pagueveloz', time: '16:16 · Pix', amount: 'R$ 75,85', type: 'pix-out' },
+        { title: 'Entrada da renegociação', time: 'Renegociação', amount: '+ R$ 94,69', type: 'pix-in' }
+    ] },
+    { date: '03 Jan', items: [
+        { title: 'Pagamento da fatura', time: '07:45', amount: 'R$ 79,90', type: 'bill' }
+    ] },
+    { date: '02 Jan', items: [
+        { title: 'Maico Rodrigues da Costa', time: '13:51 · Pix', amount: 'R$ 3,00', type: 'pix-out' },
+        { title: 'Lidia Maria Moreira Mund', time: '13:31 · Pix', amount: 'R$ 30,00', type: 'pix-out' }
     ] }
 ];
 
