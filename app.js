@@ -1,6 +1,6 @@
 const transactions = [
     { date: '01 Abr', items: [
-        { title: 'Mori Da Praia', time: '19:55 · Pix', amount: 'R$ 125,78', type: 'pix-out' },
+
         { title: 'Matheus Tadeo Zilmann Da Silva', time: '19:47 · Pix', amount: '+ R$ 400,00', type: 'pix-in' }
     ] },
     { date: '31 Mar', items: [
