@@ -1,0 +1,22 @@
+# .gitignore
+*.tmp
+.DS_Store
+Thumbs.db
+node_modules/
+.vscode/
+.idea/
+.gemini/
+brain/
+logs/
+overview.txt
+task.md
+implementation_plan.md
+walkthrough.md
+*.webp
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+# Although we want some SVG icons, we'll ignore auto-generated ones

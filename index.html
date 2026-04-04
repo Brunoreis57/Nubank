@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nubank Replica</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="app-container">
+        
+        <!-- Mobile Shell: Status Bar -->
+        <div class="status-bar" id="status-bar">
+            <div id="status-time">14:56</div>
+            <div class="status-icons">
+                <i data-lucide="signal" size="14"></i>
+                <span style="font-size: 11px; font-weight: 700;">5G</span>
+                <div class="battery-icon">
+                    <div class="battery-fill"></div>
+                    <i data-lucide="zap" size="8" class="battery-zap"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: DASHBOARD -->
+        <div id="screen-home" class="screen">
+            <div class="header" style="background-color: var(--nu-purple); height: 160px; align-items: flex-start; padding-top: 40px;">
+                <div style="width: 100%; display: flex; justify-content: space-between; padding-top: 10px;">
+                    <div class="action-circle interactive" id="btn-user" style="width: 44px; height: 44px; background: rgba(255,255,255,0.2); color: white;">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div style="display: flex; gap: 20px; color: white;">
+                        <i data-lucide="eye" id="eye-toggle" class="interactive"></i>
+                        <i data-lucide="help-circle" class="interactive"></i>
+                        <i data-lucide="user-plus" class="interactive"></i>
+                    </div>
+                </div>
+                <div style="margin-top: 25px; font-weight: 600; color: white; font-size: 17px;">Olá, Usuário</div>
+            </div>
+
+            <!-- Account Section -->
+            <div class="section interactive entry-anim" id="btn-saldo">
+                <div class="section-header">
+                    <span class="section-title">Saldo em conta</span>
+                    <i data-lucide="chevron-right" size="20"></i>
+                </div>
+                <div class="balance">R$ <span class="balance-value">129,98</span></div>
+                <div class="balance-pill">
+                    <i data-lucide="globe" size="14"></i>
+                    <span>R$ 0,00</span>
+                </div>
+            </div>
+
+            <!-- Actions Scroll -->
+            <div class="actions-scroll entry-anim" style="animation-delay: 0.1s;">
+                <div class="action-item interactive" id="btn-pix">
+                    <div class="action-circle"><i data-lucide="diamond"></i></div>
+                    <div class="action-label">Área Pix e Transferir</div>
+                </div>
+                <div class="action-item interactive" id="btn-pagar">
+                    <div class="action-circle"><i data-lucide="barcode"></i></div>
+                    <div class="action-label">Pagar</div>
+                </div>
+                <div class="action-item interactive" id="btn-loan">
+                    <div class="action-circle">
+                        <i data-lucide="hand-coins"></i>
+                        <span class="badge-novo">Novo</span>
+                    </div>
+                    <div class="action-label">Pegar emprestado</div>
+                </div>
+                <div class="action-item interactive" id="btn-recharge">
+                    <div class="action-circle"><i data-lucide="smartphone"></i></div>
+                    <div class="action-label">Recarga de celular</div>
+                </div>
+                <div class="action-item interactive" id="btn-boxes">
+                    <div class="action-circle"><i data-lucide="shopping-bag"></i></div>
+                    <div class="action-label">Caixinhas e Investir</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Additional Credit Section -->
+            <div class="section-card interactive entry-anim" id="btn-extra-credit" style="animation-delay: 0.2s;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i data-lucide="banknote" style="color: var(--nu-text-sub);"></i>
+                    <div style="flex: 1;">
+                        <div class="section-title" style="font-size: 14px;">Dinheiro adicional</div>
+                        <div class="transaction-meta" style="margin-top: 2px;">Opções de crédito disponível</div>
+                    </div>
+                    <i data-lucide="chevron-right" style="color: var(--nu-text-sub);"></i>
+                </div>
+            </div>
+
+            <!-- Banners Carousel -->
+            <div class="banner-carousel interactive entry-anim" id="btn-insurance" style="animation-delay: 0.3s;">
+                <div class="banner-content">
+                    <span>Nubank Vida: seguro a partir de <b>R$4/mês.</b></span>
+                    <i data-lucide="lock" size="18" style="color: #BA68C8;"></i>
+                </div>
+                <div class="banner-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Credit Card Section -->
+            <div class="section interactive entry-anim" id="btn-credit" style="animation-delay: 0.4s;">
+                <div class="section-header">
+                    <span class="section-title">Cartão de crédito</span>
+                    <i data-lucide="chevron-right" size="20"></i>
+                </div>
+                <div class="transaction-meta">Fatura atual</div>
+                <div class="balance" style="font-size: 18px;">R$ <span class="balance-value">484,23</span></div>
+                <div class="transaction-meta" style="margin-top: 4px;">Limite disponível de -R$ <span class="balance-value">14,67</span></div>
+                <div class="transaction-meta" style="margin-top: 10px; color: var(--nu-text); font-size: 12px; line-height: 1.4;">
+                    <b>Novo!</b> A fatura já pesou? A gente reorganiza os pagamentos mensais para você.
+                </div>
+                <div class="pill-button" id="btn-organize">Organizar</div>
+            </div>
+
+            <div style="height: 120px;"></div> <!-- Bottom space for floating nav -->
+        </div>
+
+        <!-- SCREEN: STATEMENT (EXTRATO) -->
+        <div id="screen-extrato" class="screen hidden" style="flex: 1; overflow-y: auto; background: var(--nu-bg);">
+            <div class="extrato-view-container">
+                <div class="extrato-header" style="border-bottom: none; padding-bottom: 0;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div id="btn-back" class="interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
+                            <i data-lucide="chevron-left"></i>
+                        </div>
+                        <i data-lucide="help-circle" style="margin-left: auto; color: var(--nu-text-sub); width: 24px; height: 24px;"></i>
+                        <i data-lucide="more-horizontal" style="color: var(--nu-text-sub); width: 24px; height: 24px;"></i>
+                    </div>
+                </div>
+
+                <div class="extrato-balance-section" style="margin-top: -10px;">
+                    <div class="balance" style="font-size: 26px; margin-bottom: 4px;">R$ <span class="balance-value">129,98</span></div>
+                    <div class="transaction-meta" style="font-size: 14px; font-weight: 600; color: #111;">Saldo disponível</div>
+                </div>
+
+                <div class="extrato-controls">
+                    <div class="search-bar" style="margin: 20px 0; width: 100%;">
+                        <i data-lucide="search" size="18"></i>
+                        <input type="text" id="search-input" placeholder="Buscar" style="border: none; background: transparent; outline: none; width: 100%; font-size: 16px;">
+                    </div>
+                    <!-- Filter Pills -->
+                    <div class="filter-scroll">
+                        <div class="filter-pill active" id="filter-all">Tudo</div>
+                        <div class="filter-pill" id="filter-in">Entradas</div>
+                        <div class="filter-pill" id="filter-out">Saídas</div>
+                    </div>
+                </div>
+                
+                <div id="transactions-container" style="padding-top: 5px;"></div>
+            </div>
+        </div>
+
+        <!-- Floating Nav -->
+        <div class="floating-nav-container">
+            <div class="floating-nav">
+                <div class="nav-item active" id="nav-home">
+                    <div class="nav-circle"><i data-lucide="arrow-up-down"></i></div>
+                </div>
+                <div class="nav-item" id="nav-money">
+                    <i data-lucide="dollar-sign"></i>
+                </div>
+                <div class="nav-item" id="nav-shopping">
+                    <i data-lucide="gift"></i>
+                </div>
+                <div class="nav-item" id="nav-ads">
+                    <div style="position: relative;">
+                        <i data-lucide="smartphone"></i>
+                        <div class="nav-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Shell: Home Indicator -->
+        <div class="home-indicator"></div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast hidden">Funcionalidade em breve!</div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
