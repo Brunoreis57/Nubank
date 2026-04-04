@@ -12,11 +12,12 @@ overview.txt
 task.md
 implementation_plan.md
 walkthrough.md
-*.webp
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-*.svg
-# Although we want some SVG icons, we'll ignore auto-generated ones
+
+# Removed blanket image exclusions to allow favicons and brand assets
+# *.webp
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
+# *.bmp
+# *.svg
