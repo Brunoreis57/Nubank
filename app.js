@@ -1,7 +1,5 @@
 const transactions = [
-    { date: '01 Abr', items: [
-        { title: 'Matheus Tadeo Zilmann Da Silva', time: '19:47 · Pix', amount: '+ R$ 400,00', type: 'pix-in' }
-    ] },
+
     { date: '31 Mar', items: [
         { title: 'Vitor Ferrari', time: '00:37 · Pix', amount: '+ R$ 200,00', type: 'pix-in' }
     ] },
