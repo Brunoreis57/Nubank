@@ -4,7 +4,7 @@ const urlsToCache = [
   './index.html',
   './style.css',
   './app.js',
-  './nubank.webp',
+  './favicon.png',
   './manifest.json'
 ];
 
