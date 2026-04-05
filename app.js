@@ -340,6 +340,28 @@ function renderTransactionsCore(containerId, data, isCard = false) {
                               isBillMsg ? 'background: #FEE7E7; color: #E53935;' :
                               isPayment ? 'background: #EBF7EF; color: #269144;' : '';
 
+            // Lógica de Pressão Longa para Edição
+            let pressTimer;
+            const startPress = (e) => {
+                if (isCard) return;
+                div.classList.add('pressing');
+                pressTimer = setTimeout(() => {
+                    div.classList.remove('pressing');
+                    div.classList.toggle('editing-item');
+                    if (navigator.vibrate) navigator.vibrate(50);
+                }, 800);
+            };
+            const clearPress = () => {
+                clearTimeout(pressTimer);
+                div.classList.remove('pressing');
+            };
+
+            div.onmousedown = startPress;
+            div.ontouchstart = startPress;
+            div.onmouseup = clearPress;
+            div.onmouseleave = clearPress;
+            div.ontouchend = clearPress;
+
             div.innerHTML = `
                 <div class="transaction-icon" style="${iconStyle}">
                     <i data-lucide="${getIcon(item.type)}"></i>
@@ -353,7 +375,11 @@ function renderTransactionsCore(containerId, data, isCard = false) {
                     ${!isCard ? `<div class="delete-btn" onclick="confirmDelete(event, ${item.gIdx}, ${item.iIdx})"><i data-lucide="trash-2"></i></div>` : ''}
                 </div>
             `;
-            div.onclick = () => showToast('Detalhes em breve');
+            div.onclick = () => {
+                if (!div.classList.contains('editing-item')) {
+                    showToast('Detalhes em breve');
+                }
+            };
             container.appendChild(div);
         });
 
