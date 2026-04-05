@@ -273,7 +273,7 @@ function savePersistedData() {
 }
 
 function updateBalanceUI() {
-    document.querySelectorAll('.balance-value').forEach(el => {
+    document.querySelectorAll('.account-balance-value').forEach(el => {
         el.innerText = currentBalance;
     });
 }
