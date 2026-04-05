@@ -255,21 +255,31 @@ const DEFAULT_BALANCE = '129,98';
 let cardTransactions = [...DEFAULT_CARD_TRANSACTIONS];
 let transactions = [...DEFAULT_TRANSACTIONS];
 let currentBalance = DEFAULT_BALANCE;
+let currentUserName = 'Vitor';
+let isVisible = true;
 
 // Persistência Local
 function loadPersistedData() {
     const savedBalance = localStorage.getItem('nu_balance');
     const savedTransactions = localStorage.getItem('nu_transactions');
+    const savedUserName = localStorage.getItem('nu_user_name');
+    const savedVisibility = localStorage.getItem('nu_visibility');
     
     if (savedBalance) currentBalance = savedBalance;
     if (savedTransactions) transactions = JSON.parse(savedTransactions);
+    if (savedUserName) currentUserName = savedUserName;
+    if (savedVisibility !== null) isVisible = savedVisibility === 'true';
     
     updateBalanceUI();
+    updateUserNameUI();
+    applyVisibilityUI();
 }
 
 function savePersistedData() {
     localStorage.setItem('nu_balance', currentBalance);
     localStorage.setItem('nu_transactions', JSON.stringify(transactions));
+    localStorage.setItem('nu_user_name', currentUserName);
+    localStorage.setItem('nu_visibility', isVisible);
 }
 
 function updateBalanceUI() {
@@ -278,7 +288,13 @@ function updateBalanceUI() {
     });
 }
 
-let isVisible = true;
+function updateUserNameUI() {
+    const greetingEl = document.getElementById('user-name-text');
+    if (greetingEl) {
+        greetingEl.innerText = `Olá, ${currentUserName}`;
+    }
+}
+
 let currentSearch = '';
 let currentTypeFilter = 'all';
 
@@ -430,21 +446,38 @@ function showToast(message) {
 
 function toggleVisibility() {
     isVisible = !isVisible;
+    applyVisibilityUI();
+    savePersistedData();
+}
+
+function applyVisibilityUI() {
     const eyeWrapper = document.getElementById('eye-toggle');
-    const eyeIcon = eyeWrapper.querySelector('i');
-    eyeIcon.setAttribute('data-lucide', isVisible ? 'eye' : 'eye-off');
+    if (!eyeWrapper) return;
     
-    document.querySelectorAll('.balance-value').forEach(el => {
-        if (isVisible) el.classList.remove('blur-balance');
-        else el.classList.add('blur-balance');
+    // Procura o <i> ou <svg> dentro do wrapper
+    const eyeIcon = eyeWrapper.querySelector('i') || eyeWrapper.querySelector('svg');
+    if (eyeIcon) {
+        eyeIcon.setAttribute('data-lucide', isVisible ? 'eye' : 'eye-off');
+    }
+    
+    const targets = ['.balance-value', '.account-balance-value', '.balance-pill-value'];
+    targets.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+            if (isVisible) el.classList.remove('blur-balance');
+            else el.classList.add('blur-balance');
+        });
     });
     
-    lucide.createIcons();
+    // Re-inicializa os ícones do Lucide SE o atributo mudou
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 }
 
 // Logic para Configurações
 function saveNewData() {
     const newBalance = document.getElementById('input-balance').value;
+    const newUserName = document.getElementById('input-username').value;
     const transTitle = document.getElementById('trans-title').value;
     const transAmount = document.getElementById('trans-amount').value;
     const transDate = document.getElementById('trans-date').value;
@@ -453,6 +486,10 @@ function saveNewData() {
 
     if (newBalance) {
         currentBalance = newBalance;
+    }
+    
+    if (newUserName) {
+        currentUserName = newUserName;
     }
 
     if (transTitle && transAmount && transDate) {
@@ -473,6 +510,7 @@ function saveNewData() {
 
     savePersistedData();
     updateBalanceUI();
+    updateUserNameUI();
     renderTransactions();
     showToast('Alterações salvas com sucesso!');
     navigateTo('home');
@@ -520,14 +558,18 @@ function navigateTo(screenId) {
     if (screenId === 'extrato') {
         extrato.classList.remove('hidden');
         renderTransactions();
+        applyVisibilityUI(); // Certifica que visibilidade está correta no extrato
     } else if (screenId === 'cartao') {
         cartao.classList.remove('hidden');
         renderCardTransactions();
+        applyVisibilityUI(); // Certifica que visibilidade está correta no cartão
     } else if (screenId === 'config') {
         config.classList.remove('hidden');
         document.getElementById('input-balance').value = currentBalance;
+        document.getElementById('input-username').value = currentUserName;
     } else {
         home.classList.remove('hidden');
+        applyVisibilityUI();
     }
 }
 

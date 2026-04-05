@@ -25,12 +25,14 @@
                         <i data-lucide="user"></i>
                     </div>
                     <div style="display: flex; gap: 20px; color: white;">
-                        <i data-lucide="eye" id="eye-toggle" class="interactive"></i>
+                        <div id="eye-toggle" class="interactive" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="eye"></i>
+                        </div>
                         <i data-lucide="help-circle" class="interactive"></i>
                         <i data-lucide="user-plus" class="interactive"></i>
                     </div>
                 </div>
-                <div style="margin-top: 25px; font-weight: 600; color: white; font-size: 17px;">Olá, Vitor</div>
+                <div style="margin-top: 25px; font-weight: 600; color: white; font-size: 17px;" id="user-name-text">Olá, Vitor</div>
             </div>
 
             <!-- Account Section -->
@@ -42,7 +44,7 @@
                 <div class="balance">R$ <span class="account-balance-value">129,98</span></div>
                 <div class="balance-pill">
                     <i data-lucide="globe" size="14"></i>
-                    <span>R$ 0,00</span>
+                    <span class="balance-pill-value">R$ 0,00</span>
                 </div>
             </div>
 
@@ -221,6 +223,14 @@
             </div>
 
             <div style="padding: 24px;">
+                <div style="margin-bottom: 30px;">
+                    <div style="font-weight: 600; font-size: 16px; margin-bottom: 15px; color: var(--nu-purple);">Seu Nome</div>
+                    <input type="text" id="input-username" class="config-input" placeholder="Ex: Vitor">
+                    <div class="transaction-meta" style="margin-top: 8px;">Como você quer ser chamado na tela inicial.</div>
+                </div>
+
+                <div class="divider" style="margin: 30px 0;"></div>
+
                 <div style="margin-bottom: 30px;">
                     <div style="font-weight: 600; font-size: 16px; margin-bottom: 15px; color: var(--nu-purple);">Editar Saldo Atual</div>
                     <input type="text" id="input-balance" class="config-input" placeholder="Ex: 500,00" style="font-size: 24px; font-weight: 700;">
