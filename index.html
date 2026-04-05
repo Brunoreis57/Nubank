@@ -211,9 +211,72 @@
         <!-- Mobile Shell: Home Indicator -->
         <div class="home-indicator"></div>
 
-        <!-- Toast Notification -->
+        <!-- SCREEN: CONFIGURATIONS -->
+        <div id="screen-config" class="screen hidden">
+            <div class="header" style="justify-content: flex-start; gap: 20px; background-color: var(--nu-purple); color: white;">
+                <div class="action-circle interactive" id="btn-back-config" style="background: rgba(255,255,255,0.2); color: white;">
+                    <i data-lucide="chevron-left"></i>
+                </div>
+                <div style="font-weight: 600; font-size: 18px;">Configurações</div>
+            </div>
+
+            <div style="padding: 24px;">
+                <div style="margin-bottom: 30px;">
+                    <div style="font-weight: 600; font-size: 16px; margin-bottom: 15px; color: var(--nu-purple);">Editar Saldo Atual</div>
+                    <input type="text" id="input-balance" class="config-input" placeholder="Ex: 500,00" style="font-size: 24px; font-weight: 700;">
+                    <div class="transaction-meta" style="margin-top: 8px;">O valor será aplicado em todas as telas.</div>
+                </div>
+
+                <div class="divider" style="margin: 30px 0;"></div>
+
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 15px; color: var(--nu-purple);">Nova Transação</div>
+                    
+                    <div class="config-field">
+                        <label>Nome / Título</label>
+                        <input type="text" id="trans-title" class="config-input" placeholder="Ex: Mercado Central">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Valor (use + para entrada)</label>
+                        <input type="text" id="trans-amount" class="config-input" placeholder="Ex: - R$ 50,00 ou + R$ 100,00">
+                    </div>
+
+                    <div style="display: flex; gap: 15px;">
+                        <div class="config-field" style="flex: 1;">
+                            <label>Data</label>
+                            <input type="text" id="trans-date" class="config-input" placeholder="Ex: 05 Abr">
+                        </div>
+                        <div class="config-field" style="flex: 1;">
+                            <label>Hora</label>
+                            <input type="text" id="trans-time" class="config-input" placeholder="Ex: 14:20">
+                        </div>
+                    </div>
+
+                    <div class="config-field">
+                        <label>Tipo de Transação</label>
+                        <select id="trans-type" class="config-input" style="height: 50px;">
+                            <option value="pix-in">Pix Recebido (Verde)</option>
+                            <option value="pix-out">Pix Enviado</option>
+                            <option value="bill">Pagamento / Débito</option>
+                            <option value="store">Compra em Loja</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 40px;">
+                    <button id="btn-save-config" class="btn-primary" style="width: 100%; border: none; padding: 18px; border-radius: 30px; font-weight: 700; background: var(--nu-purple); color: white; cursor: pointer;">Salvar Alterações</button>
+                    <button id="btn-reset-config" style="background: transparent; border: 1px solid #ddd; color: #666; padding: 15px; border-radius: 12px; font-weight: 600; cursor: pointer;">Restaurar Padrão de Fábrica</button>
+                    <p style="font-size: 11px; color: #999; text-align: center; line-height: 1.4; margin-top: 10px;">
+                        Nota: Os dados são salvos apenas no seu navegador.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <div id="toast" class="toast hidden">Funcionalidade em breve!</div>
     </div>
+
 
     <script src="app.js"></script>
     <script>

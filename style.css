@@ -329,3 +329,40 @@ body {
 .amount-positive { color: #111; } /* Matching photos: most positive Pix are black in this view */
 
 .search-bar { background: var(--nu-gray-light); padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 12px; }
+
+/* Config Screen Styles */
+.config-input {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 2px solid #EEE;
+    font-size: 16px;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.3s;
+    color: #111;
+}
+
+.config-input:focus {
+    border-bottom-color: var(--nu-purple);
+}
+
+.config-field {
+    margin-bottom: 20px;
+}
+
+.config-field label {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+select.config-input {
+    padding: 10px 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23767676' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right center;
+}
+

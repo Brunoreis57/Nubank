@@ -1,4 +1,4 @@
-const cardTransactions = [
+const DEFAULT_CARD_TRANSACTIONS = [
     { date: '28 Mar', items: [
         { title: 'Limite convertido em saldo n...', time: '15:04 · em 4x', amount: 'R$ 80,02', type: 'card-in' }
     ] },
@@ -62,8 +62,7 @@ const cardTransactions = [
     ] }
 ];
 
-const transactions = [
-
+const DEFAULT_TRANSACTIONS = [
     { date: '31 Mar', items: [
         { title: 'Vitor Ferrari', time: '00:37 · Pix', amount: '+ R$ 200,00', type: 'pix-in' }
     ] },
@@ -86,7 +85,6 @@ const transactions = [
         { title: 'Smart Home Comercio E Locacao...', time: '08:55 · Pix', amount: 'R$ 12,00', type: 'pix-out' },
         { title: 'Banco Pan', time: '08:37 · Boleto', amount: 'R$ 151,63', type: 'bill' }
     ] },
-
     { date: '23 Mar', items: [
         { title: 'Ciapark Estacionamento', time: '13:39 · Débito', amount: 'R$ 3,00', type: 'bill' },
         { title: 'DesfrutarAVida', time: '00:55 · Débito', amount: 'R$ 13,55', type: 'bill' }
@@ -252,6 +250,34 @@ const transactions = [
     ] }
 ];
 
+const DEFAULT_BALANCE = '129,98';
+
+let cardTransactions = [...DEFAULT_CARD_TRANSACTIONS];
+let transactions = [...DEFAULT_TRANSACTIONS];
+let currentBalance = DEFAULT_BALANCE;
+
+// Persistência Local
+function loadPersistedData() {
+    const savedBalance = localStorage.getItem('nu_balance');
+    const savedTransactions = localStorage.getItem('nu_transactions');
+    
+    if (savedBalance) currentBalance = savedBalance;
+    if (savedTransactions) transactions = JSON.parse(savedTransactions);
+    
+    updateBalanceUI();
+}
+
+function savePersistedData() {
+    localStorage.setItem('nu_balance', currentBalance);
+    localStorage.setItem('nu_transactions', JSON.stringify(transactions));
+}
+
+function updateBalanceUI() {
+    document.querySelectorAll('.balance-value').forEach(el => {
+        el.innerText = currentBalance;
+    });
+}
+
 let isVisible = true;
 let currentSearch = '';
 let currentTypeFilter = 'all';
@@ -310,7 +336,7 @@ function renderTransactionsCore(containerId, data, isCard = false) {
             const isPayment = item.type === 'payment';
             
             const iconStyle = isPositive ? 'background: #EBF7EF; color: #269144;' : 
-                              isCanceled ? 'color: #E53935;' : 
+                              isCanceled ? 'color: #767676;' : 
                               isBillMsg ? 'background: #FEE7E7; color: #E53935;' :
                               isPayment ? 'background: #EBF7EF; color: #269144;' : '';
 
@@ -328,7 +354,6 @@ function renderTransactionsCore(containerId, data, isCard = false) {
             container.appendChild(div);
         });
 
-        // Add end message if it's the last group and we're on the card screen
         if (isCard && index === filteredData.length - 1) {
             const endMsg = document.createElement('div');
             endMsg.style = 'padding: 40px 24px; text-align: center; color: var(--nu-text-sub); font-size: 14px; line-height: 1.5;';
@@ -368,6 +393,49 @@ function toggleVisibility() {
     lucide.createIcons();
 }
 
+// Logic para Configurações
+function saveNewData() {
+    const newBalance = document.getElementById('input-balance').value;
+    const transTitle = document.getElementById('trans-title').value;
+    const transAmount = document.getElementById('trans-amount').value;
+    const transDate = document.getElementById('trans-date').value;
+    const transTime = document.getElementById('trans-time').value;
+    const transType = document.getElementById('trans-type').value;
+
+    if (newBalance) {
+        currentBalance = newBalance;
+    }
+
+    if (transTitle && transAmount && transDate) {
+        const newItem = {
+            title: transTitle,
+            time: `${transTime} · ${transType === 'pix-in' || transType === 'pix-out' ? 'Pix' : 'Débito'}`,
+            amount: transAmount,
+            type: transType
+        };
+
+        const existingGroup = transactions.find(g => g.date === transDate);
+        if (existingGroup) {
+            existingGroup.items.unshift(newItem);
+        } else {
+            transactions.unshift({ date: transDate, items: [newItem] });
+        }
+    }
+
+    savePersistedData();
+    updateBalanceUI();
+    renderTransactions();
+    showToast('Alterações salvas com sucesso!');
+    navigateTo('home');
+}
+
+function resetToDefaults() {
+    if (confirm('Deseja realmente restaurar todos os dados para o padrão original?')) {
+        localStorage.clear();
+        location.reload();
+    }
+}
+
 // Live Clock
 function updateClock() {
     const now = new Date();
@@ -393,11 +461,12 @@ function navigateTo(screenId) {
     const home = document.getElementById('screen-home');
     const extrato = document.getElementById('screen-extrato');
     const cartao = document.getElementById('screen-cartao');
+    const config = document.getElementById('screen-config');
     
-    // Hide all first
     home.classList.add('hidden');
     extrato.classList.add('hidden');
     cartao.classList.add('hidden');
+    config.classList.add('hidden');
 
     if (screenId === 'extrato') {
         extrato.classList.remove('hidden');
@@ -405,6 +474,9 @@ function navigateTo(screenId) {
     } else if (screenId === 'cartao') {
         cartao.classList.remove('hidden');
         renderCardTransactions();
+    } else if (screenId === 'config') {
+        config.classList.remove('hidden');
+        document.getElementById('input-balance').value = currentBalance;
     } else {
         home.classList.remove('hidden');
     }
@@ -437,16 +509,25 @@ const filters = {
 };
 
 Object.keys(filters).forEach(id => {
-    document.getElementById(id).onclick = function() {
-        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-        this.classList.add('active');
-        currentTypeFilter = filters[id];
-        renderTransactions();
-    };
+    const el = document.getElementById(id);
+    if (el) {
+        el.onclick = function() {
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            currentTypeFilter = filters[id];
+            renderTransactions();
+        };
+    }
 });
 
+// Config Screen Actions
+document.getElementById('btn-user').onclick = () => navigateTo('config');
+document.getElementById('btn-save-config').onclick = saveNewData;
+document.getElementById('btn-reset-config').onclick = resetToDefaults;
+document.getElementById('btn-back-config').onclick = () => navigateTo('home');
+
 // Generic Actions
-const interactiveIds = ['btn-user', 'btn-pix', 'btn-pagar', 'btn-loan', 'btn-recharge', 'btn-boxes', 'btn-extra-credit', 'btn-insurance', 'btn-organize'];
+const interactiveIds = ['btn-pix', 'btn-pagar', 'btn-loan', 'btn-recharge', 'btn-boxes', 'btn-extra-credit', 'btn-insurance', 'btn-organize'];
 interactiveIds.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.onclick = () => showToast('Funcionalidade em desenvolvimento');
@@ -474,10 +555,10 @@ document.querySelectorAll('.nav-item').forEach(nav => {
 // Init
 window.addEventListener('DOMContentLoaded', () => {
     try {
+        loadPersistedData();
         renderTransactions();
         lucide.createIcons();
     } catch (e) {
         console.error('Erro ao inicializar:', e);
     }
 });
-
