@@ -305,9 +305,9 @@ function renderTransactionsCore(containerId, data, isCard = false) {
     if (!container) return;
     container.innerHTML = '';
 
-    const filteredData = data.map(group => ({
+    const filteredData = data.map((group, gIdx) => ({
         ...group,
-        items: group.items.filter(item => {
+        items: group.items.map((item, iIdx) => ({ ...item, gIdx, iIdx })).filter(item => {
             const matchesSearch = item.title.toLowerCase().includes(currentSearch.toLowerCase()) || 
                                  item.amount.toLowerCase().includes(currentSearch.toLowerCase());
             
@@ -348,7 +348,10 @@ function renderTransactionsCore(containerId, data, isCard = false) {
                     <div class="transaction-title">${item.title}</div>
                     <div class="transaction-meta">${item.time}</div>
                 </div>
-                <div class="transaction-amount ${isPositive ? 'amount-positive' : ''}" style="${isCanceled ? 'color: #767676; text-decoration: line-through;' : ''}">${item.amount}</div>
+                <div class="transaction-amount-container">
+                    <div class="transaction-amount ${isPositive ? 'amount-positive' : ''}" style="${isCanceled ? 'color: #767676; text-decoration: line-through;' : ''}">${item.amount}</div>
+                    ${!isCard ? `<div class="delete-btn" onclick="confirmDelete(event, ${item.gIdx}, ${item.iIdx})"><i data-lucide="trash-2"></i></div>` : ''}
+                </div>
             `;
             div.onclick = () => showToast('Detalhes em breve');
             container.appendChild(div);
@@ -366,6 +369,26 @@ function renderTransactionsCore(containerId, data, isCard = false) {
 
 function renderTransactions() {
     renderTransactionsCore('transactions-container', transactions, false);
+}
+
+function confirmDelete(event, gIdx, iIdx) {
+    event.stopPropagation();
+    if (confirm('Deseja excluir esta transação do extrato?')) {
+        deleteTransaction(gIdx, iIdx);
+    }
+}
+
+function deleteTransaction(gIdx, iIdx) {
+    transactions[gIdx].items.splice(iIdx, 1);
+    
+    // Remover grupo de data se estiver vazio
+    if (transactions[gIdx].items.length === 0) {
+        transactions.splice(gIdx, 1);
+    }
+    
+    savePersistedData();
+    renderTransactions();
+    showToast('Transação excluída');
 }
 
 function renderCardTransactions() {
