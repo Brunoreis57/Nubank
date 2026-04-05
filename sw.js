@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nubank-cache-v4';
+const CACHE_NAME = 'nubank-cache-v5';
 const urlsToCache = [
   './',
   './index.html',
