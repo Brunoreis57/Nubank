@@ -39,7 +39,7 @@
                     <span class="section-title">Saldo em conta</span>
                     <i data-lucide="chevron-right" size="20"></i>
                 </div>
-                <div class="balance">R$ <span class="balance-value">129,98</span></div>
+                <div class="balance">R$ <span class="balance-value">529,98</span></div>
                 <div class="balance-pill">
                     <i data-lucide="globe" size="14"></i>
                     <span>R$ 0,00</span>
@@ -125,7 +125,7 @@
             <div class="extrato-view-container">
                 <div class="extrato-header" style="border-bottom: none; padding-bottom: 0;">
                     <div style="display: flex; align-items: center; gap: 20px;">
-                        <div id="btn-back" class="interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
+                        <div class="btn-back-global interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
                             <i data-lucide="chevron-left"></i>
                         </div>
                         <i data-lucide="help-circle" style="margin-left: auto; color: var(--nu-text-sub); width: 24px; height: 24px;"></i>
@@ -134,7 +134,7 @@
                 </div>
 
                 <div class="extrato-balance-section" style="margin-top: -10px;">
-                    <div class="balance" style="font-size: 26px; margin-bottom: 4px;">R$ <span class="balance-value">129,98</span></div>
+                    <div class="balance" style="font-size: 26px; margin-bottom: 4px;">R$ <span class="balance-value">529,98</span></div>
                     <div class="transaction-meta" style="font-size: 14px; font-weight: 600; color: #111;">Saldo disponível</div>
                 </div>
 
@@ -152,6 +152,38 @@
                 </div>
                 
                 <div id="transactions-container" style="padding-top: 5px;"></div>
+            </div>
+        </div>
+
+        <!-- SCREEN: CREDIT CARD STATEMENT (EXTRATO CARTÃO) -->
+        <div id="screen-cartao" class="screen hidden" style="flex: 1; overflow-y: auto; background: var(--nu-bg);">
+            <div class="extrato-view-container">
+                <div class="extrato-header" style="border-bottom: none; padding-bottom: 0;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div class="btn-back-global interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
+                            <i data-lucide="chevron-left"></i>
+                        </div>
+                        <div style="margin-left: auto; display: flex; gap: 20px; color: var(--nu-text-sub);">
+                            <i data-lucide="search" class="interactive"></i>
+                            <i data-lucide="help-circle" class="interactive"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extrato-balance-section" style="margin-top: -10px; border-bottom: 1px solid var(--nu-gray-light);">
+                    <div class="transaction-meta" style="font-size: 14px; font-weight: 600; color: #767676; margin-bottom: 4px;">Fatura atual</div>
+                    <div class="balance" style="font-size: 26px; margin-bottom: 8px; color: #111;">R$ <span class="balance-value">484,23</span></div>
+                    <div class="transaction-meta" style="font-size: 14px;">Limite disponível <span style="color: var(--nu-green); font-weight: 600;">R$ 14,67</span></div>
+                </div>
+
+                <div class="extrato-controls">
+                    <div class="search-bar" style="margin: 20px 0; width: 100%;">
+                        <i data-lucide="search" size="18"></i>
+                        <input type="text" class="search-input-card" placeholder="Buscar" style="border: none; background: transparent; outline: none; width: 100%; font-size: 16px;">
+                    </div>
+                </div>
+                
+                <div id="card-transactions-container" style="padding-top: 5px;"></div>
             </div>
         </div>
 

@@ -472,5 +472,12 @@ document.querySelectorAll('.nav-item').forEach(nav => {
 });
 
 // Init
-renderTransactions();
-lucide.createIcons();
+window.addEventListener('DOMContentLoaded', () => {
+    try {
+        renderTransactions();
+        lucide.createIcons();
+    } catch (e) {
+        console.error('Erro ao inicializar:', e);
+    }
+});
+
