@@ -652,6 +652,15 @@ document.querySelectorAll('.pix-action-item').forEach(item => {
 document.querySelector('.btn-back-pix').onclick = () => navigateTo('pix');
 document.querySelector('.btn-close-comprovante').onclick = () => navigateTo('home');
 
+// Máscara de Moeda para Transferência
+document.getElementById('input-transfer-amount').oninput = function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = (value / 100).toFixed(2) + '';
+    value = value.replace(".", ",");
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    e.target.value = value;
+};
+
 document.getElementById('btn-finish-transfer').onclick = function() {
     const amount = document.getElementById('input-transfer-amount').value;
     const key = document.getElementById('input-transfer-key').value;
