@@ -389,6 +389,21 @@
                     </div>
 
                     <div class="config-field">
+                        <label>Nome do Destinatário</label>
+                        <input type="text" id="input-transfer-dest-name" class="config-input" placeholder="Nome de quem recebe">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Seu Nome (Origem)</label>
+                        <input type="text" id="input-transfer-orig-name" class="config-input" placeholder="Seu nome completo">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Seu CPF (Origem)</label>
+                        <input type="text" id="input-transfer-orig-cpf" class="config-input" placeholder="***.000.000-**">
+                    </div>
+
+                    <div class="config-field">
                         <label>Instituição / Banco</label>
                         <select id="input-transfer-bank" class="config-input">
                             <option value="Nubank">Nubank</option>
@@ -406,6 +421,11 @@
                         <input type="text" id="input-transfer-date" class="config-input" placeholder="Hoje">
                     </div>
 
+                    <div class="config-field">
+                        <label>Sua Instituição (Origem)</label>
+                        <input type="text" id="input-transfer-orig-bank" class="config-input" value="NU PAGAMENTOS - IP">
+                    </div>
+
                     <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 40px;">
                         <button id="btn-finish-transfer" class="btn-primary" style="width: 100%; border: none; padding: 18px; border-radius: 30px; font-weight: 700; background: var(--nu-purple); color: white; cursor: pointer;">Transferir</button>
                         <button id="btn-schedule-transfer" style="background: transparent; border: 1px solid #ddd; color: var(--nu-text); padding: 15px; border-radius: 30px; font-weight: 600; cursor: pointer;">Agendar</button>
@@ -416,7 +436,7 @@
 
         <!-- SCREEN: PIX COMPROVANTE -->
         <div id="screen-pix-comprovante" class="screen hidden" style="background: #F5F5F5; display: flex; flex-direction: column; align-items: center;">
-            <div id="pdf-content" style="width: 100%; max-width: 400px; background: white; min-height: 100%; font-family: 'Inter', sans-serif; box-shadow: 0 0 20px rgba(0,0,0,0.05);">
+            <div id="pdf-content" style="width: 100%; max-width: 350px; background: white; min-height: 100%; font-family: 'Inter', sans-serif; box-shadow: 0 0 20px rgba(0,0,0,0.05);">
                 
                 <!-- Close and Share Buttons (Not part of PDF) -->
                 <div class="no-pdf" style="padding: 10px 24px; display: flex; justify-content: space-between; align-items: center;">
@@ -485,7 +505,7 @@
                     </div>
                     <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 40px;">
                         <span style="font-weight: 600; color: #000;">CPF</span>
-                        <span style="font-weight: 600; color: #767676; text-align: right;">***.344.313-**</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-orig-cpf">***.344.313-**</span>
                     </div>
                 </div>
 
@@ -509,7 +529,7 @@
                 </div>
             </div>
             
-            <div class="no-pdf" style="padding: 20px 24px; background: white;">
+            <div class="no-pdf" style="padding: 20px 24px; background: white; width: 100%; max-width: 350px; border-top: 1px solid #eee;">
                 <button id="btn-share-pdf" class="btn-primary" style="width: 100%; border: none; padding: 18px; border-radius: 30px; font-weight: 700; background: var(--nu-purple); color: white; cursor: pointer;">Compartilhar PDF</button>
             </div>
         </div>

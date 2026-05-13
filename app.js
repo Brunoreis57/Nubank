@@ -579,9 +579,12 @@ function navigateTo(screenId) {
     } else if (screenId === 'pix-transfer') {
         pixTransfer.classList.remove('hidden');
         applyVisibilityUI();
-        // Reset inputs
+        // Reset inputs and pre-fill origin with current user
         document.getElementById('input-transfer-amount').value = '';
         document.getElementById('input-transfer-key').value = '';
+        document.getElementById('input-transfer-dest-name').value = '';
+        document.getElementById('input-transfer-orig-name').value = currentUserName;
+        document.getElementById('input-transfer-orig-cpf').value = '***.344.313-**';
         document.getElementById('input-transfer-date').value = 'Hoje';
     } else if (screenId === 'pix-comprovante') {
         pixComprovante.classList.remove('hidden');
@@ -665,7 +668,10 @@ document.getElementById('btn-finish-transfer').onclick = function() {
     const amount = document.getElementById('input-transfer-amount').value;
     const key = document.getElementById('input-transfer-key').value;
     const bank = document.getElementById('input-transfer-bank').value;
-    const date = document.getElementById('input-transfer-date').value;
+    const destName = document.getElementById('input-transfer-dest-name').value || 'AGUIA EXPRESS LTDA';
+    const origName = document.getElementById('input-transfer-orig-name').value || currentUserName;
+    const origCpf = document.getElementById('input-transfer-orig-cpf').value || '***.344.313-**';
+    const origBank = document.getElementById('input-transfer-orig-bank').value || 'NU PAGAMENTOS - IP';
 
     if (!amount || !key) {
         showToast('Preencha o valor e a chave Pix');
@@ -679,8 +685,10 @@ document.getElementById('btn-finish-transfer').onclick = function() {
     // Atualizar comprovante
     document.getElementById('comp-amount').innerText = formattedAmount;
     document.getElementById('comp-dest-key').innerText = key;
+    document.getElementById('comp-dest-name').innerText = destName;
     document.getElementById('comp-dest-bank').innerText = bank === 'Nubank' ? 'NU PAGAMENTOS - IP' : bank;
-    document.getElementById('comp-orig-name').innerText = currentUserName;
+    document.getElementById('comp-orig-name').innerText = origName;
+    document.getElementById('comp-orig-cpf').innerText = origCpf;
 
     const now = new Date();
     const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
