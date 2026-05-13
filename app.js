@@ -755,8 +755,8 @@ function generatePDF() {
         margin:       0,
         filename:     'comprovante-nubank.pdf',
         image:        { type: 'jpeg', quality: 1.0 },
-        html2canvas:  { scale: 3, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas:  { scale: 3, useCORS: true, logging: false, windowWidth: 350 },
+        jsPDF:        { unit: 'mm', format: [92.6, 250], orientation: 'portrait' }
     };
     
     showToast('Gerando comprovante...');
