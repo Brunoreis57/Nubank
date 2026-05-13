@@ -742,11 +742,38 @@ function generatePDF() {
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     
-    showToast('Gerando PDF...');
-    html2pdf().set(opt).from(element).save().then(() => {
-        showToast('PDF gerado com sucesso!');
-        // Restaurar botões
-        document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'flex');
+    showToast('Gerando comprovante...');
+    
+    // Usar html2pdf para gerar o PDF e então decidir se compartilha ou baixa
+    const worker = html2pdf().set(opt).from(element).toPdf().get('pdf');
+    
+    worker.then(pdf => {
+        const blob = pdf.output('blob');
+        const file = new File([blob], 'comprovante-nubank.pdf', { type: 'application/pdf' });
+
+        // Tentar compartilhamento nativo
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({
+                files: [file],
+                title: 'Comprovante Nubank',
+                text: 'Segue o comprovante da minha transferência Pix.'
+            })
+            .then(() => {
+                showToast('Compartilhado com sucesso!');
+                document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'flex');
+            })
+            .catch((error) => {
+                console.error('Erro ao compartilhar:', error);
+                // Fallback para download se o usuário cancelar ou der erro
+                pdf.save();
+                document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'flex');
+            });
+        } else {
+            // Fallback para download direto se não suportar Share API
+            pdf.save();
+            showToast('PDF baixado com sucesso!');
+            document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'flex');
+        }
     });
 }
 
