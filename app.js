@@ -549,24 +549,43 @@ function navigateTo(screenId) {
     const extrato = document.getElementById('screen-extrato');
     const cartao = document.getElementById('screen-cartao');
     const config = document.getElementById('screen-config');
+    const pix = document.getElementById('screen-pix');
+    const pixTransfer = document.getElementById('screen-pix-transfer');
+    const pixComprovante = document.getElementById('screen-pix-comprovante');
     
     home.classList.add('hidden');
     extrato.classList.add('hidden');
     cartao.classList.add('hidden');
     config.classList.add('hidden');
+    pix.classList.add('hidden');
+    pixTransfer.classList.add('hidden');
+    pixComprovante.classList.add('hidden');
 
     if (screenId === 'extrato') {
         extrato.classList.remove('hidden');
         renderTransactions();
-        applyVisibilityUI(); // Certifica que visibilidade está correta no extrato
+        applyVisibilityUI(); 
     } else if (screenId === 'cartao') {
         cartao.classList.remove('hidden');
         renderCardTransactions();
-        applyVisibilityUI(); // Certifica que visibilidade está correta no cartão
+        applyVisibilityUI(); 
     } else if (screenId === 'config') {
         config.classList.remove('hidden');
         document.getElementById('input-balance').value = currentBalance;
         document.getElementById('input-username').value = currentUserName;
+    } else if (screenId === 'pix') {
+        pix.classList.remove('hidden');
+        applyVisibilityUI();
+    } else if (screenId === 'pix-transfer') {
+        pixTransfer.classList.remove('hidden');
+        applyVisibilityUI();
+        // Reset inputs
+        document.getElementById('input-transfer-amount').value = '';
+        document.getElementById('input-transfer-key').value = '';
+        document.getElementById('input-transfer-date').value = 'Hoje';
+    } else if (screenId === 'pix-comprovante') {
+        pixComprovante.classList.remove('hidden');
+        applyVisibilityUI();
     } else {
         home.classList.remove('hidden');
         applyVisibilityUI();
@@ -575,6 +594,7 @@ function navigateTo(screenId) {
 
 // Event Listeners
 document.getElementById('eye-toggle').onclick = (e) => { e.stopPropagation(); toggleVisibility(); };
+document.getElementById('btn-pix').onclick = () => navigateTo('pix');
 document.getElementById('btn-saldo').onclick = () => navigateTo('extrato');
 document.getElementById('btn-credit').onclick = () => navigateTo('cartao');
 document.querySelectorAll('.btn-back-global').forEach(btn => {
@@ -617,8 +637,121 @@ document.getElementById('btn-save-config').onclick = saveNewData;
 document.getElementById('btn-reset-config').onclick = resetToDefaults;
 document.getElementById('btn-back-config').onclick = () => navigateTo('home');
 
+// Pix Actions
+document.querySelectorAll('.pix-action-item').forEach(item => {
+    item.onclick = function() {
+        const label = this.querySelector('.action-label').innerText;
+        if (label === 'Transferir') {
+            navigateTo('pix-transfer');
+        } else {
+            showToast('Funcionalidade em breve');
+        }
+    }
+});
+
+document.querySelector('.btn-back-pix').onclick = () => navigateTo('pix');
+document.querySelector('.btn-close-comprovante').onclick = () => navigateTo('home');
+
+document.getElementById('btn-finish-transfer').onclick = function() {
+    const amount = document.getElementById('input-transfer-amount').value;
+    const key = document.getElementById('input-transfer-key').value;
+    const bank = document.getElementById('input-transfer-bank').value;
+    const date = document.getElementById('input-transfer-date').value;
+
+    if (!amount || !key) {
+        showToast('Preencha o valor e a chave Pix');
+        return;
+    }
+
+    // Formatar valor com separador de milhar
+    let numericAmount = parseFloat(amount.replace('.', '').replace(',', '.'));
+    let formattedAmount = numericAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+    // Atualizar comprovante
+    document.getElementById('comp-amount').innerText = formattedAmount;
+    document.getElementById('comp-dest-key').innerText = key;
+    document.getElementById('comp-dest-bank').innerText = bank === 'Nubank' ? 'NU PAGAMENTOS - IP' : bank;
+    document.getElementById('comp-orig-name').innerText = currentUserName;
+
+    const now = new Date();
+    const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+    const formattedDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    const formattedTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('comp-datetime').innerText = `${formattedDate} - ${formattedTime}`;
+
+    // Gerar ID de transação aleatório
+    const transId = 'E' + Math.random().toString(36).substring(2, 15).toUpperCase() + Math.random().toString(36).substring(2, 15).toUpperCase();
+    document.getElementById('comp-id').innerText = transId;
+    document.getElementById('comp-id-footer').innerText = transId;
+
+    // Atualizar saldo (subtrair)
+    let cleanAmount = parseFloat(amount.replace(',', '.'));
+    let cleanBalance = parseFloat(currentBalance.replace('.', '').replace(',', '.'));
+    
+    if (!isNaN(cleanAmount)) {
+        let newBalanceNum = cleanBalance - cleanAmount;
+        currentBalance = newBalanceNum.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        updateBalanceUI();
+        
+        // Adicionar ao extrato
+        const newItem = {
+            title: `Pix enviado - ${key.substring(0, 15)}...`,
+            time: `${formattedTime} · Pix`,
+            amount: `R$ ${amount}`,
+            type: 'pix-out'
+        };
+        const todayStr = now.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+        const existingGroup = transactions.find(g => g.date.toLowerCase().includes(todayStr.toLowerCase()));
+        if (existingGroup) {
+            existingGroup.items.unshift(newItem);
+        } else {
+            transactions.unshift({ date: todayStr, items: [newItem] });
+        }
+        savePersistedData();
+        renderTransactions();
+    }
+
+    navigateTo('pix-comprovante');
+    showToast('Transferência realizada!');
+};
+
+document.getElementById('btn-schedule-transfer').onclick = () => {
+    showToast('Agendamento realizado com sucesso!');
+    setTimeout(() => navigateTo('home'), 1500);
+};
+
+document.getElementById('btn-share-pdf').onclick = function() {
+    generatePDF();
+};
+
+document.getElementById('btn-share-pdf-top').onclick = function() {
+    generatePDF();
+};
+
+function generatePDF() {
+    const element = document.getElementById('pdf-content');
+    
+    // Ocultar botões que não devem sair no PDF
+    document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'none');
+
+    const opt = {
+        margin:       0,
+        filename:     'comprovante-nubank.pdf',
+        image:        { type: 'jpeg', quality: 1.0 },
+        html2canvas:  { scale: 3, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    
+    showToast('Gerando PDF...');
+    html2pdf().set(opt).from(element).save().then(() => {
+        showToast('PDF gerado com sucesso!');
+        // Restaurar botões
+        document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'flex');
+    });
+}
+
 // Generic Actions
-const interactiveIds = ['btn-pix', 'btn-pagar', 'btn-loan', 'btn-recharge', 'btn-boxes', 'btn-extra-credit', 'btn-insurance', 'btn-organize'];
+const interactiveIds = ['btn-pagar', 'btn-loan', 'btn-recharge', 'btn-boxes', 'btn-extra-credit', 'btn-insurance', 'btn-organize'];
 interactiveIds.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.onclick = () => showToast('Funcionalidade em desenvolvimento');
