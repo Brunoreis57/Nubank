@@ -752,11 +752,11 @@ function generatePDF() {
     document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'none');
 
     const opt = {
-        margin:       0,
+        margin:       [10, 5, 10, 5], // top, left, bottom, right
         filename:     'comprovante-nubank.pdf',
         image:        { type: 'jpeg', quality: 1.0 },
-        html2canvas:  { scale: 3, useCORS: true, logging: false, windowWidth: 350 },
-        jsPDF:        { unit: 'mm', format: [92.6, 250], orientation: 'portrait' }
+        html2canvas:  { scale: 3, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: [102.6, 260], orientation: 'portrait' }
     };
     
     showToast('Gerando comprovante...');
