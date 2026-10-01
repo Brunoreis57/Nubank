@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nubank Replica</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#820AD1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="app-container">
+        
+        <!-- SCREEN: DASHBOARD -->
+        <div id="screen-home" class="screen">
+            <div class="header" style="background-color: var(--nu-purple); height: 140px; align-items: flex-start; padding-top: 25px;">
+                <div style="width: 100%; display: flex; justify-content: space-between; padding-top: 10px;">
+                    <div class="action-circle interactive" id="btn-user" style="width: 44px; height: 44px; background: rgba(255,255,255,0.2); color: white;">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div style="display: flex; gap: 20px; color: white;">
+                        <div id="eye-toggle" class="interactive" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="eye"></i>
+                        </div>
+                        <i data-lucide="help-circle" class="interactive"></i>
+                        <i data-lucide="user-plus" class="interactive"></i>
+                    </div>
+                </div>
+                <div style="margin-top: 25px; font-weight: 600; color: white; font-size: 17px;" id="user-name-text">Olá, Vitor</div>
+            </div>
+
+            <!-- Account Section -->
+            <div class="section interactive entry-anim" id="btn-saldo">
+                <div class="section-header">
+                    <span class="section-title">Saldo em conta</span>
+                    <i data-lucide="chevron-right" size="20"></i>
+                </div>
+                <div class="balance">R$ <span class="account-balance-value">129,98</span></div>
+                <div class="balance-pill">
+                    <i data-lucide="globe" size="14"></i>
+                    <span class="balance-pill-value">R$ 0,00</span>
+                </div>
+            </div>
+
+            <!-- Actions Scroll -->
+            <div class="actions-scroll entry-anim" style="animation-delay: 0.1s;">
+                <div class="action-item interactive" id="btn-pix">
+                    <div class="action-circle"><i data-lucide="diamond"></i></div>
+                    <div class="action-label">Área Pix e Transferir</div>
+                </div>
+                <div class="action-item interactive" id="btn-pagar">
+                    <div class="action-circle"><i data-lucide="barcode"></i></div>
+                    <div class="action-label">Pagar</div>
+                </div>
+                <div class="action-item interactive" id="btn-loan">
+                    <div class="action-circle">
+                        <i data-lucide="hand-coins"></i>
+                        <span class="badge-novo">Novo</span>
+                    </div>
+                    <div class="action-label">Pegar emprestado</div>
+                </div>
+                <div class="action-item interactive" id="btn-recharge">
+                    <div class="action-circle"><i data-lucide="smartphone"></i></div>
+                    <div class="action-label">Recarga de celular</div>
+                </div>
+                <div class="action-item interactive" id="btn-boxes">
+                    <div class="action-circle"><i data-lucide="shopping-bag"></i></div>
+                    <div class="action-label">Caixinhas e Investir</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Additional Credit Section -->
+            <div class="section-card interactive entry-anim" id="btn-extra-credit" style="animation-delay: 0.2s;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i data-lucide="banknote" style="color: var(--nu-text-sub);"></i>
+                    <div style="flex: 1;">
+                        <div class="section-title" style="font-size: 14px;">Dinheiro adicional</div>
+                        <div class="transaction-meta" style="margin-top: 2px;">Opções de crédito disponível</div>
+                    </div>
+                    <i data-lucide="chevron-right" style="color: var(--nu-text-sub);"></i>
+                </div>
+            </div>
+
+            <!-- Banners Carousel -->
+            <div class="banner-carousel interactive entry-anim" id="btn-insurance" style="animation-delay: 0.3s;">
+                <div class="banner-content">
+                    <span>Nubank Vida: seguro a partir de <b>R$4/mês.</b></span>
+                    <i data-lucide="lock" size="18" style="color: #BA68C8;"></i>
+                </div>
+                <div class="banner-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Credit Card Section -->
+            <div class="section interactive entry-anim" id="btn-credit" style="animation-delay: 0.4s;">
+                <div class="section-header">
+                    <span class="section-title">Cartão de crédito</span>
+                    <i data-lucide="chevron-right" size="20"></i>
+                </div>
+                <div class="transaction-meta">Fatura atual</div>
+                <div class="balance" style="font-size: 18px;">R$ <span class="balance-value">484,23</span></div>
+                <div class="transaction-meta" style="margin-top: 4px;">Limite disponível de -R$ <span class="balance-value">14,67</span></div>
+                <div class="transaction-meta" style="margin-top: 10px; color: var(--nu-text); font-size: 12px; line-height: 1.4;">
+                    <b>Novo!</b> A fatura já pesou? A gente reorganiza os pagamentos mensais para você.
+                </div>
+                <div class="pill-button" id="btn-organize">Organizar</div>
+            </div>
+
+            <div style="height: 120px;"></div> <!-- Bottom space for floating nav -->
+        </div>
+
+        <!-- SCREEN: STATEMENT (EXTRATO) -->
+        <div id="screen-extrato" class="screen hidden" style="flex: 1; overflow-y: auto; background: var(--nu-bg);">
+            <div class="extrato-view-container">
+                <div class="extrato-header" style="border-bottom: none; padding-bottom: 0;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div class="btn-back-global interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
+                            <i data-lucide="chevron-left"></i>
+                        </div>
+                        <i data-lucide="help-circle" style="margin-left: auto; color: var(--nu-text-sub); width: 24px; height: 24px;"></i>
+                        <i data-lucide="more-horizontal" style="color: var(--nu-text-sub); width: 24px; height: 24px;"></i>
+                    </div>
+                </div>
+
+                <div class="extrato-balance-section" style="margin-top: -10px;">
+                    <div class="balance" style="font-size: 26px; margin-bottom: 4px;">R$ <span class="account-balance-value">129,98</span></div>
+                    <div class="transaction-meta" style="font-size: 14px; font-weight: 600; color: #111;">Saldo disponível</div>
+                </div>
+
+                <div class="extrato-controls">
+                    <div class="search-bar" style="margin: 20px 0; width: 100%;">
+                        <i data-lucide="search" size="18"></i>
+                        <input type="text" id="search-input" placeholder="Buscar" style="border: none; background: transparent; outline: none; width: 100%; font-size: 16px;">
+                    </div>
+                    <!-- Filter Pills -->
+                    <div class="filter-scroll">
+                        <div class="filter-pill active" id="filter-all">Tudo</div>
+                        <div class="filter-pill" id="filter-in">Entradas</div>
+                        <div class="filter-pill" id="filter-out">Saídas</div>
+                    </div>
+                </div>
+                
+                <div id="transactions-container" style="padding-top: 5px;"></div>
+            </div>
+        </div>
+
+        <!-- SCREEN: CREDIT CARD STATEMENT (EXTRATO CARTÃO) -->
+        <div id="screen-cartao" class="screen hidden" style="flex: 1; overflow-y: auto; background: var(--nu-bg);">
+            <div class="extrato-view-container">
+                <div class="extrato-header" style="border-bottom: none; padding-bottom: 0;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div class="btn-back-global interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
+                            <i data-lucide="chevron-left"></i>
+                        </div>
+                        <div style="margin-left: auto; display: flex; gap: 20px; color: var(--nu-text-sub);">
+                            <i data-lucide="search" class="interactive"></i>
+                            <i data-lucide="help-circle" class="interactive"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extrato-balance-section" style="margin-top: -10px; border-bottom: 1px solid var(--nu-gray-light);">
+                    <div class="transaction-meta" style="font-size: 14px; font-weight: 600; color: #767676; margin-bottom: 4px;">Fatura atual</div>
+                    <div class="balance" style="font-size: 26px; margin-bottom: 8px; color: #111;">R$ <span class="balance-value">484,23</span></div>
+                    <div class="transaction-meta" style="font-size: 14px;">Limite disponível <span style="color: var(--nu-green); font-weight: 600;">R$ 14,67</span></div>
+                </div>
+
+                <div class="extrato-controls">
+                    <div class="search-bar" style="margin: 20px 0; width: 100%;">
+                        <i data-lucide="search" size="18"></i>
+                        <input type="text" class="search-input-card" placeholder="Buscar" style="border: none; background: transparent; outline: none; width: 100%; font-size: 16px;">
+                    </div>
+                </div>
+                
+                <div id="card-transactions-container" style="padding-top: 5px;"></div>
+            </div>
+        </div>
+
+        <!-- Floating Nav -->
+        <div class="floating-nav-container">
+            <div class="floating-nav">
+                <div class="nav-item active" id="nav-home">
+                    <div class="nav-circle"><i data-lucide="arrow-up-down"></i></div>
+                </div>
+                <div class="nav-item" id="nav-money">
+                    <i data-lucide="dollar-sign"></i>
+                </div>
+                <div class="nav-item" id="nav-shopping">
+                    <i data-lucide="gift"></i>
+                </div>
+                <div class="nav-item" id="nav-ads">
+                    <div style="position: relative;">
+                        <i data-lucide="smartphone"></i>
+                        <div class="nav-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: PIX AREA -->
+        <div id="screen-pix" class="screen hidden" style="flex: 1; overflow-y: auto; background: var(--nu-bg);">
+            <div class="extrato-view-container">
+                <div class="extrato-header" style="border-bottom: none; padding-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                    <div class="btn-back-global interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
+                        <i data-lucide="chevron-left"></i>
+                    </div>
+                    <i data-lucide="help-circle" style="color: var(--nu-text-sub); width: 24px; height: 24px;"></i>
+                </div>
+
+                <div style="padding: 10px 24px 20px 24px;">
+                    <h1 style="font-size: 26px; font-weight: 700; color: var(--nu-text); margin-bottom: 8px;">Área Pix</h1>
+                    <p style="font-size: 14px; color: var(--nu-text-sub); line-height: 1.5; max-width: 90%;">Envie e receba pagamentos a qualquer hora, direto da sua conta.</p>
+                </div>
+
+                <!-- Pix Actions Grid -->
+                <div class="pix-actions-grid entry-anim">
+                    <div class="pix-action-item interactive">
+                        <div class="action-circle"><i data-lucide="send"></i></div>
+                        <div class="action-label">Transferir</div>
+                    </div>
+                    <div class="pix-action-item interactive">
+                        <div class="action-circle"><i data-lucide="copy"></i></div>
+                        <div class="action-label">Copiar e colar</div>
+                    </div>
+                    <div class="pix-action-item interactive">
+                        <div class="action-circle"><i data-lucide="qr-code"></i></div>
+                        <div class="action-label">Ler QR code</div>
+                    </div>
+                    <div class="pix-action-item interactive">
+                        <div class="action-circle"><i data-lucide="coins"></i></div>
+                        <div class="action-label">Cobrar</div>
+                    </div>
+                </div>
+
+                <div class="divider" style="margin: 30px 0 10px 0;"></div>
+
+                <!-- Pix Options List -->
+                <div class="pix-options-list entry-anim" style="animation-delay: 0.1s;">
+                    <div class="pix-option-row interactive">
+                        <div class="pix-option-content">
+                            <i data-lucide="key" size="20"></i>
+                            <span>Minhas chaves</span>
+                        </div>
+                        <i data-lucide="chevron-right" size="18" style="color: #CCC;"></i>
+                    </div>
+                    <div class="pix-option-row interactive">
+                        <div class="pix-option-content">
+                            <i data-lucide="sliders" size="20"></i>
+                            <span>Meus limites Pix</span>
+                        </div>
+                        <i data-lucide="chevron-right" size="18" style="color: #CCC;"></i>
+                    </div>
+                    <div class="pix-option-row interactive">
+                        <div class="pix-option-content">
+                            <i data-lucide="help-circle" size="20"></i>
+                            <span>Me ajuda</span>
+                        </div>
+                        <i data-lucide="chevron-right" size="18" style="color: #CCC;"></i>
+                    </div>
+                </div>
+
+                <div class="divider" style="margin: 10px 0;"></div>
+
+                <!-- Registration Banner -->
+                <div class="section-card interactive entry-anim" style="margin: 20px 24px; background: #F8F4FF; border: none; animation-delay: 0.2s;">
+                    <div style="display: flex; align-items: flex-start; gap: 15px;">
+                        <i data-lucide="shield-check" style="color: var(--nu-purple); margin-top: 2px;"></i>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; font-size: 14px; color: var(--nu-purple); margin-bottom: 4px;">Registre suas chaves</div>
+                            <div style="font-size: 13px; color: var(--nu-text-sub); line-height: 1.4;">Garanta a segurança e rapidez nos seus recebimentos.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mobile Shell: Home Indicator -->
+        <div class="home-i        <!-- SCREEN: CONFIGURATIONS -->
+        <div id="screen-config" class="screen hidden">
+            <div class="header" style="justify-content: flex-start; gap: 20px; background-color: var(--nu-purple); color: white;" id="config-header">
+                <div class="action-circle interactive" id="btn-back-config" style="background: rgba(255,255,255,0.2); color: white;">
+                    <i data-lucide="chevron-left"></i>
+                </div>
+                <div style="font-weight: 600; font-size: 18px;">Configurações</div>
+            </div>
+
+            <div style="padding: 24px;">
+                <!-- SELETOR DE BANCO -->
+                <div style="margin-bottom: 30px;">
+                    <div style="font-weight: 600; font-size: 16px; margin-bottom: 12px; color: var(--nu-purple);" id="title-select-bank">Banco Ativo / Design</div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="button" id="btn-bank-nubank" class="bank-select-btn active" style="flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #820AD1; background: #F8F4FF; font-weight: 700; color: #820AD1; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
+                            <i data-lucide="smartphone" size="18"></i> Nubank
+                        </button>
+                        <button type="button" id="btn-bank-itau" class="bank-select-btn" style="flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #E2E8F0; background: white; font-weight: 700; color: #000B29; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
+                            <div style="width: 22px; height: 22px; background: #000B29; border-radius: 6px; color: white; font-size: 10px; font-weight: 900; font-style: italic; display: flex; align-items: center; justify-content: center;">itaú</div> Itaú PJ
+                        </button>
+                    </div>
+                    <div class="transaction-meta" style="margin-top: 8px;">Escolha qual modelo de aplicativo deseja utilizar.</div>
+                </div>
+
+                <!-- CAMPOS EXTRAS ITAU -->
+                <div id="itau-extra-fields" style="margin-bottom: 30px; display: none; background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #E2E8F0;">
+                    <div style="font-weight: 600; font-size: 15px; margin-bottom: 12px; color: #000B29;">Dados do Cabeçalho Itaú PJ</div>
+                    <div class="config-field" style="margin-bottom: 12px;">
+                        <label>Nome da Empresa / Titular</label>
+                        <input type="text" id="input-itau-company" class="config-input" placeholder="Ex: Mz Transportes Ltda">
+                    </div>
+                    <div class="config-field">
+                        <label>Agência e Conta / Detalhes</label>
+                        <input type="text" id="input-itau-account" class="config-input" placeholder="Ex: Ag 8668 Cc 99853-0 | HELEN KATIA">
+                    </div>
+                </div>
+
+                <div class="divider" style="margin: 25px 0;"></div>
+
+                <div style="margin-bottom: 30px;">
+                    <div style="font-weight: 600; font-size: 16px; margin-bottom: 15px; color: var(--nu-purple);" id="title-user-name">Seu Nome / Iniciais</div>
+                    <input type="text" id="input-username" class="config-input" placeholder="Ex: Vitor">
+                    <div class="transaction-meta" style="margin-top: 8px;">Como você quer ser chamado no aplicativo.</div>
+                </div>
+
+                <div class="divider" style="margin: 30px 0;"></div>
+
+                <div style="margin-bottom: 30px;">
+                    <div style="font-weight: 600; font-size: 16px; margin-bottom: 15px; color: var(--nu-purple);" id="title-user-balance">Editar Saldo Atual</div>
+                    <input type="text" id="input-balance" class="config-input" placeholder="Ex: 27.516,27" style="font-size: 24px; font-weight: 700;">
+                    <div class="transaction-meta" style="margin-top: 8px;">O valor será aplicado em todas as telas.</div>
+                </div>
+
+                <div class="divider" style="margin: 30px 0;"></div>
+
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 15px; color: var(--nu-purple);" id="title-new-trans">Nova Transação (Lançamento)</div>
+                    
+                    <div class="config-field">
+                        <label>Nome / Título</label>
+                        <input type="text" id="trans-title" class="config-input" placeholder="Ex: MATHEUS TADEO ZILMANN DA SILVA">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Valor (use + para entrada, - para saída)</label>
+                        <input type="text" id="trans-amount" class="config-input" placeholder="Ex: - R$ 60.000,00 ou + R$ 60.000,00">
+                    </div>
+
+                    <div style="display: flex; gap: 15px;">
+                        <div class="config-field" style="flex: 1;">
+                            <label>Data</label>
+                            <input type="text" id="trans-date" class="config-input" placeholder="Ex: 01 de outubro de 2026">
+                        </div>
+                        <div class="config-field" style="flex: 1;">
+                            <label>Hora</label>
+                            <input type="text" id="trans-time" class="config-input" placeholder="Ex: 19:18">
+                        </div>
+                    </div>
+
+                    <div class="config-field">
+                        <label>Tipo de Transação</label>
+                        <select id="trans-type" class="config-input" style="height: 50px;">
+                            <option value="pix-out">Pix Enviado (Saída)</option>
+                            <option value="pix-in">Pix Recebido (Entrada Verde)</option>
+                            <option value="bill">Pagamento / Débito</option>
+                            <option value="store">Compra em Loja</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 40px;">
+                    <button id="btn-save-config" class="btn-primary" style="width: 100%; border: none; padding: 18px; border-radius: 30px; font-weight: 700; background: var(--nu-purple); color: white; cursor: pointer;">Salvar Alterações</button>
+                    <button id="btn-reset-config" style="background: transparent; border: 1px solid #ddd; color: #666; padding: 15px; border-radius: 12px; font-weight: 600; cursor: pointer;">Restaurar Padrão de Fábrica</button>
+                    <p style="font-size: 11px; color: #999; text-align: center; line-height: 1.4; margin-top: 10px;">
+                        Nota: Os dados são salvos apenas no seu navegador.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: ITAU HOME (DASHBOARD ITAÚ PJ) -->
+        <div id="screen-itau-home" class="screen hidden" style="background: #000B29; overflow-y: auto;">
+            <!-- Top Header Navy Blue -->
+            <div class="itau-header" style="background: #000B29; padding: 25px 20px 25px 20px; color: white;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="itau-avatar interactive" id="btn-itau-user" style="width: 42px; height: 42px; background: white; color: #000B29; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                            <span id="itau-avatar-initials">MT</span>
+                        </div>
+                        <div>
+                            <div style="font-size: 15px; font-weight: 700; color: white; letter-spacing: -0.2px;" id="itau-company-text">Mz Transportes Ltda</div>
+                            <div style="font-size: 12px; color: #A5B4CD; margin-top: 2px;" id="itau-account-info-text">Ag 8668 Cc 99853-0 | HELEN KAT...</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 18px;">
+                        <!-- Lupa de Busca -->
+                        <div class="interactive" style="cursor: pointer;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <!-- Chat / Notificações com Badge 14 -->
+                        <div class="interactive" style="position: relative; cursor: pointer;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span style="position: absolute; top: -6px; right: -8px; background: #EC6608; color: white; font-size: 10px; font-weight: 800; padding: 1px 5px; border-radius: 10px; border: 1px solid #000B29;">14</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Container Sheet with Top Curved Corners -->
+            <div style="background: #F1F5F9; border-radius: 20px 20px 0 0; min-height: calc(100vh - 100px); padding: 20px 16px 95px 16px; display: flex; flex-direction: column; gap: 14px; margin-top: -5px;">
+                
+                <!-- Acesso rápido card -->
+                <div style="background: white; border-radius: 18px; padding: 20px 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.03);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <span style="font-size: 18px; font-weight: 700; color: #1E293B; letter-spacing: -0.3px;">Acesso rápido</span>
+                        <div style="display: flex; gap: 16px; color: #475569; align-items: center;">
+                            <!-- Pincel/Lápis -->
+                            <svg class="interactive" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                                <path d="M12 20h9"></path>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                            </svg>
+                            <!-- Olho -->
+                            <i data-lucide="eye" class="interactive" id="itau-eye-toggle-home" size="18" style="cursor: pointer;"></i>
+                            <!-- Sincronizar / Reordenar -->
+                            <svg class="interactive" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                                <path d="M21.5 2v6h-6"></path>
+                                <path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Action buttons horizontal scroll -->
+                    <div style="display: flex; justify-content: space-between; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;">
+                        <!-- PIX -->
+                        <div class="itau-action-box interactive" id="btn-itau-pix-home" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 68px; flex-shrink: 0; cursor: pointer;">
+                            <div style="width: 58px; height: 58px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2.5L16.5 7L12 11.5L7.5 7L12 2.5Z" fill="#000929"/>
+                                    <path d="M12 12.5L16.5 17L12 21.5L7.5 17L12 12.5Z" fill="#000929"/>
+                                    <path d="M12.5 12L17 7.5L21.5 12L17 16.5L12.5 12Z" fill="#000929"/>
+                                    <path d="M2.5 12L7 7.5L11.5 12L7 16.5L2.5 12Z" fill="#000929"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 12px; font-weight: 500; color: #334155; text-align: center;">Pix</span>
+                        </div>
+
+                        <!-- PAGAR -->
+                        <div class="itau-action-box interactive" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 68px; flex-shrink: 0; cursor: pointer;">
+                            <div style="width: 58px; height: 58px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-linecap="round">
+                                    <line x1="3" y1="5" x2="3" y2="19" stroke-width="2.5"/>
+                                    <line x1="7" y1="5" x2="7" y2="19" stroke-width="1.5"/>
+                                    <line x1="11" y1="5" x2="11" y2="19" stroke-width="3"/>
+                                    <line x1="15" y1="5" x2="15" y2="19" stroke-width="1.5"/>
+                                    <line x1="18" y1="5" x2="18" y2="19" stroke-width="2"/>
+                                    <line x1="21" y1="5" x2="21" y2="19" stroke-width="1.5"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 12px; font-weight: 500; color: #334155; text-align: center;">Pagar</span>
+                        </div>
+
+                        <!-- COMPROVANTES -->
+                        <div class="itau-action-box interactive" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 68px; flex-shrink: 0; cursor: pointer;">
+                            <div style="width: 58px; height: 58px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="8" y1="13" x2="16" y2="13"/>
+                                    <line x1="8" y1="17" x2="12" y2="17"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 500; color: #334155; text-align: center; line-height: 1.2;">Comprovan-<br>tes</span>
+                        </div>
+
+                        <!-- TRANSFERÊNCIAS -->
+                        <div class="itau-action-box interactive" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 68px; flex-shrink: 0; cursor: pointer;">
+                            <div style="width: 58px; height: 58px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 4l4 4-4 4"/>
+                                    <path d="M21 8H7"/>
+                                    <path d="M7 20l-4-4 4-4"/>
+                                    <path d="M3 16h14"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 500; color: #334155; text-align: center; line-height: 1.2;">Transferên-<br>cias</span>
+                        </div>
+
+                        <!-- LIMITE DA CONTA -->
+                        <div class="itau-action-box interactive" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 68px; flex-shrink: 0; cursor: pointer;">
+                            <div style="width: 58px; height: 58px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <path d="M12 12l4-4"/>
+                                    <path d="M7.5 16.5a6 6 0 1 1 9 0"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 500; color: #334155; text-align: center; line-height: 1.2;">Limite<br>da Conta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarefas pendentes card -->
+                <div class="interactive" style="background: white; border-radius: 18px; padding: 18px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); cursor: pointer;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: #334155; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px;">
+                        0
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 14px; font-weight: 700; color: #0F172A;">Tarefas pendentes</div>
+                        <div style="font-size: 12px; color: #64748B; margin-top: 2px;">Para consultar, aprovar ou concluir</div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Itaú Balance Card -->
+                <div style="background: white; border-radius: 18px; padding: 22px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.03);">
+                    <!-- Badge Logo Itaú Squircle -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 22px;">
+                        <div style="width: 36px; height: 36px; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                            <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="40" height="40" rx="11" fill="#000929"/>
+                              <text x="20" y="26" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="17" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.8px">itaú</text>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                        <span style="font-size: 15px; color: #334155; font-weight: 500;">Saldo disponível</span>
+                        <span style="font-size: 15px; font-weight: 700; color: #0F172A;">R$ <span class="account-balance-value">27.516,27</span></span>
+                    </div>
+
+                    <div style="height: 1px; background: #E2E8F0; margin: 18px 0;"></div>
+
+                    <div class="interactive" id="btn-itau-to-extrato" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                        <span style="font-size: 15px; font-weight: 700; color: #000929;">Conferir extrato</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Banner Seguro Transações PJ -->
+                <div class="interactive" style="background: #000929; border-radius: 18px; padding: 22px 20px; color: white; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 14px rgba(0,9,41,0.18); cursor: pointer;">
+                    <div style="width: 38px; height: 38px; border-radius: 50%; background: #16A34A; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.2px;">Seguro Transações PJ</div>
+                        <div style="font-size: 12px; color: #94A3B8; line-height: 1.4;">Proteção extra para sua conta PJ a partir de R$ 21,90/mês</div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+
+            </div>
+
+            <!-- Itaú Bottom Nav -->
+            <div class="itau-bottom-nav">
+                <div class="itau-nav-item active" id="itau-nav-home" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;">
+                    <div style="background: #000929; width: 48px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white;">
+                        <i data-lucide="home" style="width: 18px; height: 18px;"></i>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #000929;">Início</span>
+                </div>
+                <div class="itau-nav-item" id="itau-nav-extrato" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;">
+                    <div style="width: 48px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #64748B;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 600; color: #64748B;">Extrato</span>
+                </div>
+                <div class="itau-nav-item" id="itau-nav-menu" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;">
+                    <div style="width: 48px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #64748B;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 600; color: #64748B;">Menu</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: ITAU EXTRATO -->
+        <div id="screen-itau-extrato" class="screen hidden" style="background: #F1F5F8; overflow-y: auto;">
+            <!-- Top Header -->
+            <div style="padding: 16px 20px 14px 20px; display: flex; flex-direction: column; gap: 14px;">
+                <!-- Header Title & Eye -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        <div class="interactive" id="btn-itau-back-extrato" style="display: flex; align-items: center; cursor: pointer;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </div>
+                        <span style="font-size: 18px; font-weight: 700; color: #0F172A;">Extrato</span>
+                    </div>
+                    <div style="cursor: pointer;" id="itau-extrato-eye-btn" class="interactive">
+                        <i data-lucide="eye" id="itau-extrato-eye-icon" style="width: 22px; height: 22px; color: #334155;"></i>
+                    </div>
+                </div>
+
+                <!-- Balance Details Section -->
+                <div style="margin-top: 10px;">
+                    <!-- Saldo em conta -->
+                    <div class="interactive" style="display: flex; justify-content: space-between; align-items: flex-end; cursor: pointer;">
+                        <div>
+                            <div style="font-size: 13px; font-weight: 500; color: #556070;">Saldo em conta</div>
+                            <div style="font-size: 17px; font-weight: 700; color: #0F172A; margin-top: 4px; letter-spacing: -0.3px;">
+                                R$ <span class="account-balance-value">27.516,27</span>
+                            </div>
+                        </div>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 4px;">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+
+                    <!-- Divider -->
+                    <div style="height: 1px; background: #CBD5E1; margin: 16px 0 14px 0; opacity: 0.6;"></div>
+
+                    <!-- Limite da conta disponível -->
+                    <div class="interactive" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                        <span style="font-size: 13px; font-weight: 500; color: #556070;">Limite da conta disponível</span>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="font-size: 14px; font-weight: 700; color: #0F172A;">R$ 0,00</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acesso rápido Section -->
+                <div style="margin-top: 6px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                        <span style="font-size: 14px; font-weight: 600; color: #1E293B;">Acesso rápido</span>
+                        <div style="display: flex; align-items: center; gap: 4px; color: #475569; font-size: 13px; font-weight: 600; cursor: pointer;" class="interactive">
+                            <span>Ocultar</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- 4 Horizontal Cards -->
+                    <div style="display: flex; gap: 12px; justify-content: space-between; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;">
+                        <!-- Baixar extrato -->
+                        <div class="itau-quick-action interactive" style="background: transparent; padding: 4px 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; flex: 1; min-width: 72px; cursor: pointer;">
+                            <div style="width: 52px; height: 52px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 500; color: #334155; text-align: center; line-height: 1.2;">Baixar<br>extrato</span>
+                        </div>
+
+                        <!-- Pix -->
+                        <div class="itau-quick-action interactive" id="btn-itau-extrato-pix" style="background: transparent; padding: 4px 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; flex: 1; min-width: 72px; cursor: pointer;">
+                            <div style="width: 52px; height: 52px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2.5L16.5 7L12 11.5L7.5 7L12 2.5Z" fill="#000929"/>
+                                    <path d="M12 12.5L16.5 17L12 21.5L7.5 17L12 12.5Z" fill="#000929"/>
+                                    <path d="M12.5 12L17 7.5L21.5 12L17 16.5L12.5 12Z" fill="#000929"/>
+                                    <path d="M2.5 12L7 7.5L11.5 12L7 16.5L2.5 12Z" fill="#000929"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 500; color: #334155; text-align: center;">Pix</span>
+                        </div>
+
+                        <!-- Comprovantes -->
+                        <div class="itau-quick-action interactive" style="background: transparent; padding: 4px 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; flex: 1; min-width: 72px; cursor: pointer;">
+                            <div style="width: 52px; height: 52px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="8" y1="13" x2="16" y2="13"/>
+                                    <line x1="8" y1="17" x2="12" y2="17"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 500; color: #334155; text-align: center; line-height: 1.2;">Comprovan-<br>tes</span>
+                        </div>
+
+                        <!-- Pagar -->
+                        <div class="itau-quick-action interactive" style="background: transparent; padding: 4px 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; flex: 1; min-width: 72px; cursor: pointer;">
+                            <div style="width: 52px; height: 52px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#000929" stroke-linecap="round">
+                                    <line x1="3" y1="5" x2="3" y2="19" stroke-width="2.5"/>
+                                    <line x1="7" y1="5" x2="7" y2="19" stroke-width="1.5"/>
+                                    <line x1="11" y1="5" x2="11" y2="19" stroke-width="3"/>
+                                    <line x1="15" y1="5" x2="15" y2="19" stroke-width="1.5"/>
+                                    <line x1="18" y1="5" x2="18" y2="19" stroke-width="2"/>
+                                    <line x1="21" y1="5" x2="21" y2="19" stroke-width="1.5"/>
+                                </svg>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 500; color: #334155; text-align: center;">Pagar</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- White Lower Lançamentos Area -->
+            <div style="background: white; border-radius: 24px 24px 0 0; padding: 22px 20px 95px 20px; flex: 1; display: flex; flex-direction: column; min-height: 520px; box-shadow: 0 -4px 12px rgba(0,0,0,0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                    <h2 style="font-size: 20px; font-weight: 700; color: #0F172A;">Lançamentos</h2>
+                    <div style="display: flex; gap: 18px; color: #334155; align-items: center;">
+                        <!-- Baixar -->
+                        <svg class="interactive" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <!-- Filtro / Sliders -->
+                        <svg class="interactive" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                            <line x1="4" y1="21" x2="4" y2="14"></line>
+                            <line x1="4" y1="10" x2="4" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12" y2="3"></line>
+                            <line x1="20" y1="21" x2="20" y2="16"></line>
+                            <line x1="20" y1="12" x2="20" y2="3"></line>
+                            <line x1="1" y1="14" x2="7" y2="14"></line>
+                            <line x1="9" y1="8" x2="15" y2="8"></line>
+                            <line x1="17" y1="16" x2="23" y2="16"></line>
+                        </svg>
+                        <!-- Busca -->
+                        <svg class="interactive" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div style="display: flex; gap: 18px; border-bottom: 1px solid #E2E8F0; margin-bottom: 20px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none;">
+                    <div class="itau-tab active" id="itau-filter-all" style="font-size: 14px; font-weight: 700; color: #0F172A; padding-bottom: 10px; border-bottom: 3px solid #EC6608; cursor: pointer; white-space: nowrap;">Todos</div>
+                    <div class="itau-tab" id="itau-filter-cons" style="font-size: 14px; font-weight: 500; color: #64748B; padding-bottom: 10px; cursor: pointer; white-space: nowrap;">Consolidado</div>
+                    <div class="itau-tab" id="itau-filter-in" style="font-size: 14px; font-weight: 500; color: #64748B; padding-bottom: 10px; cursor: pointer; white-space: nowrap;">Entradas</div>
+                    <div class="itau-tab" id="itau-filter-out" style="font-size: 14px; font-weight: 500; color: #64748B; padding-bottom: 10px; cursor: pointer; white-space: nowrap;">Saídas</div>
+                    <div class="itau-tab" id="itau-filter-fut" style="font-size: 14px; font-weight: 500; color: #64748B; padding-bottom: 10px; cursor: pointer; white-space: nowrap;">Futuros</div>
+                </div>
+
+                <!-- Itaú Transactions Container -->
+                <div id="itau-transactions-container"></div>
+            </div>
+
+            <!-- Itaú Bottom Nav -->
+            <div class="itau-bottom-nav">
+                <div class="itau-nav-item" id="itau-nav-home-2" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;">
+                    <div style="width: 48px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #64748B;">
+                        <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 600; color: #64748B;">Início</span>
+                </div>
+                <div class="itau-nav-item active" id="itau-nav-extrato-2" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;">
+                    <div style="background: #000929; width: 48px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #000929;">Extrato</span>
+                </div>
+                <div class="itau-nav-item" id="itau-nav-menu-2" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;">
+                    <div style="width: 48px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #64748B;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 600; color: #64748B;">Menu</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: PIX TRANSFER -->
+        <div id="screen-pix-transfer" class="screen hidden" style="background: var(--nu-bg);">
+            <div class="extrato-view-container" style="padding-bottom: 150px;">
+                <div class="extrato-header" style="border-bottom: none; padding-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                    <div class="btn-back-pix interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start; margin-left: -10px;">
+                        <i data-lucide="chevron-left"></i>
+                    </div>
+                    <i data-lucide="help-circle" style="color: var(--nu-text-sub); width: 24px; height: 24px;"></i>
+                </div>
+
+                <div style="padding: 10px 24px 20px 24px;">
+                    <h1 style="font-size: 26px; font-weight: 700; color: var(--nu-text); margin-bottom: 8px;">Transferir</h1>
+                    <p style="font-size: 14px; color: var(--nu-text-sub); line-height: 1.5;">Qual o valor da transferência?</p>
+                </div>
+
+                <div style="padding: 0 24px;">
+                    <div style="margin-bottom: 30px;">
+                        <span style="font-size: 32px; font-weight: 700; color: var(--nu-text);">R$ </span>
+                        <input type="text" id="input-transfer-amount" class="config-input" placeholder="0,00" style="font-size: 32px; font-weight: 700; width: calc(100% - 60px); border-bottom: none; display: inline-block;">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Chave Pix (CPF, E-mail, Telefone ou Aleatória)</label>
+                        <input type="text" id="input-transfer-key" class="config-input" placeholder="Insira a chave">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Nome do Destinatário</label>
+                        <input type="text" id="input-transfer-dest-name" class="config-input" placeholder="Nome de quem recebe">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Seu Nome (Origem)</label>
+                        <input type="text" id="input-transfer-orig-name" class="config-input" placeholder="Seu nome completo">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Seu CPF (Origem)</label>
+                        <input type="text" id="input-transfer-orig-cpf" class="config-input" placeholder="***.000.000-**">
+                    </div>
+
+                    <div class="config-field">
+                        <label>Instituição / Banco</label>
+                        <select id="input-transfer-bank" class="config-input">
+                            <option value="Nubank">Nubank</option>
+                            <option value="Banco do Brasil">Banco do Brasil</option>
+                            <option value="Itaú">Itaú Unibanco</option>
+                            <option value="Bradesco">Bradesco</option>
+                            <option value="Santander">Santander</option>
+                            <option value="Inter">Banco Inter</option>
+                            <option value="C6 Bank">C6 Bank</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 15px;">
+                        <div class="config-field" style="flex: 1;">
+                            <label for="input-transfer-date">Data da transferência</label>
+                            <input type="date" id="input-transfer-date" class="config-input">
+                        </div>
+                        <div class="config-field" style="flex: 1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <label for="input-transfer-time" style="margin-bottom: 5px;">Horário</label>
+                                <span id="btn-transfer-now" style="font-size: 11px; color: var(--nu-purple); font-weight: 600; cursor: pointer; margin-bottom: 5px;">Agora</span>
+                            </div>
+                            <input type="time" step="1" id="input-transfer-time" class="config-input">
+                        </div>
+                    </div>
+
+                    <div class="config-field">
+                        <label>Sua Instituição (Origem)</label>
+                        <input type="text" id="input-transfer-orig-bank" class="config-input" value="NU PAGAMENTOS - IP">
+                    </div>
+
+                    <div class="config-field">
+                        <label for="input-transfer-model">Modelo do Comprovante</label>
+                        <select id="input-transfer-model" class="config-input">
+                            <option value="nubank">Nubank (Padrão)</option>
+                            <option value="c6">C6 Bank</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 40px;">
+                        <button id="btn-finish-transfer" class="btn-primary" style="width: 100%; border: none; padding: 18px; border-radius: 30px; font-weight: 700; background: var(--nu-purple); color: white; cursor: pointer;">Transferir</button>
+                        <button id="btn-schedule-transfer" style="background: transparent; border: 1px solid #ddd; color: var(--nu-text); padding: 15px; border-radius: 30px; font-weight: 600; cursor: pointer;">Agendar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: PIX COMPROVANTE -->
+        <div id="screen-pix-comprovante" class="screen hidden" style="background: #F5F5F5; display: flex; flex-direction: column; align-items: center; overflow-x: hidden;">
+            
+            <!-- Close, Model Switcher and Share Buttons -->
+            <div class="no-pdf" style="padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 380px;">
+                <div class="btn-close-comprovante interactive" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-start;">
+                    <i data-lucide="x"></i>
+                </div>
+                
+                <div style="display: flex; gap: 6px; background: #E5E5E5; padding: 4px; border-radius: 20px;">
+                    <button id="tab-model-nubank" style="padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; border: none; background: var(--nu-purple); color: white; cursor: pointer; transition: all 0.2s;">Nubank</button>
+                    <button id="tab-model-c6" style="padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; border: none; background: transparent; color: #666; cursor: pointer; transition: all 0.2s;">C6 Bank</button>
+                </div>
+
+                <div id="btn-share-pdf-top" class="interactive" style="color: var(--nu-purple);">
+                    <i data-lucide="share-2"></i>
+                </div>
+            </div>
+
+            <!-- NUBANK RECEIPT TEMPLATE -->
+            <div id="pdf-content" class="receipt-card" style="width: 350px; min-width: 350px; background: white; font-family: 'Inter', sans-serif; box-shadow: 0 0 20px rgba(0,0,0,0.05); margin-bottom: 20px;">
+                <div class="pdf-inner" style="padding: 20px 24px;">
+                    <!-- Logo Header -->
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 30px;">
+                        <div style="font-size: 32px; font-weight: 800; color: #333; letter-spacing: -2px;">nu</div>
+                        <div style="width: 20px; height: 20px; background: #666; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
+                            <i data-lucide="check" style="color: white; width: 12px; height: 12px;"></i>
+                        </div>
+                    </div>
+
+                    <h1 style="font-size: 26px; font-weight: 700; color: #000; margin-bottom: 8px; line-height: 1.2;">Comprovante de transferência</h1>
+                    <div style="font-size: 16px; color: #767676; margin-bottom: 40px;" id="comp-datetime">13 MAI 2026 - 17:33:57</div>
+
+                    <!-- Main Info -->
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+                        <span style="font-weight: 600; color: #000;">Valor</span>
+                        <span style="font-weight: 600; color: #666;">R$ <span id="comp-amount">6.000,00</span></span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+                        <span style="font-weight: 600; color: #000;">Tipo de transferência</span>
+                        <span style="font-weight: 600; color: #666;">Pix</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 40px; align-items: flex-start;">
+                        <span style="font-weight: 600; color: #000;">ID da transação</span>
+                        <span style="font-size: 14px; color: #666; text-align: right; max-width: 200px; word-break: break-all;" id="comp-id">E18236120202605132033s103cec24e0</span>
+                    </div>
+
+                    <div class="divider" style="background: #f5f5f5; height: 1px; margin: 0 -24px 30px -24px;"></div>
+
+                    <!-- Destino -->
+                    <div style="font-size: 14px; font-weight: 600; color: #767676; margin-bottom: 20px;">Destino</div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Nome</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-dest-name">AGUIA EXPRESS LTDA</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">CPF</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-dest-cpf">***.770.190-**</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Instituição</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-dest-bank">NU PAGAMENTOS - IP</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Agência</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-dest-agency">0001</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Conta</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-dest-account">7248229112-0</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Tipo de conta</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-dest-account-type">Conta de pagamentos</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+                        <span style="font-weight: 600; color: #000;">Chave Pix</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-dest-key">62778593000179</span>
+                    </div>
+
+                    <div class="divider" style="background: #f5f5f5; height: 1px; margin: 0 -24px 30px -24px;"></div>
+
+                    <!-- Origem -->
+                    <div style="font-size: 14px; font-weight: 600; color: #767676; margin-bottom: 20px;">Origem</div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Nome</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-orig-name">Rafael Magalhães Rocha</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Instituição</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-orig-bank">NU PAGAMENTOS - IP</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Agência</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;">0001</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 18px;">
+                        <span style="font-weight: 600; color: #000;">Conta</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;">1323444-4</span>
+                    </div>
+                    <div class="comp-row" style="display: flex; justify-content: space-between; margin-bottom: 40px;">
+                        <span style="font-weight: 600; color: #000;">CPF</span>
+                        <span style="font-weight: 600; color: #767676; text-align: right;" id="comp-orig-cpf">***.344.313-**</span>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div style="background: #F0F0F0; padding: 40px 24px; font-size: 14px; color: #333; line-height: 1.6;">
+                    <div style="font-weight: 700; margin-bottom: 4px;">Nu Pagamentos S.A. - Instituição de Pagamento</div>
+                    <div style="font-weight: 700; margin-bottom: 24px;">CNPJ 18.236.120/0001-58</div>
+
+                    <div style="font-weight: 700; margin-bottom: 4px;">ID da transação:</div>
+                    <div style="font-weight: 700; margin-bottom: 24px; word-break: break-all;" id="comp-id-footer">E18236120202605132033s103cec24e0</div>
+
+                    <div style="margin-bottom: 24px; color: #666;">Estamos aqui para ajudar se você tiver alguma dúvida.</div>
+
+                    <div style="color: var(--nu-purple); font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 40px;">
+                        Me ajuda <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+                    </div>
+
+                    <div style="font-size: 12px; color: #767676; line-height: 1.4;">
+                        Ouvidoria: 0800 887 0463 ou demais canais em nubank.com.br/contatos#ouvidoria (Atendimento das 8h às 18h em dias úteis).
+                    </div>
+                </div>
+            </div>
+
+            <!-- C6 BANK RECEIPT TEMPLATE -->
+            <div id="c6-pdf-content" class="receipt-card hidden" style="width: 350px; min-width: 350px; background: white; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; border-radius: 0; overflow: hidden; margin-bottom: 20px; color: #1C1C1E;">
+                <!-- Top Solid Line & Dotted Cut -->
+                <div style="height: 4px; background: #000;"></div>
+                <div style="height: 1px; border-bottom: 1.5px dashed #DDD; margin-top: 3px; margin-bottom: 15px;"></div>
+
+                <div style="padding: 10px 22px 30px 22px;">
+                    <!-- Header C6 Logo -->
+                    <div style="display: flex; align-items: baseline; gap: 3px; margin-bottom: 24px;">
+                        <span style="font-size: 27px; font-weight: 900; color: #000000; letter-spacing: -1px; -webkit-text-stroke: 0.5px #000000; font-family: -apple-system, BlinkMacSystemFont, Arial Black, sans-serif;">C6</span>
+                        <span style="font-size: 18px; font-weight: 300; color: #444444; letter-spacing: 0.5px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">BANK</span>
+                    </div>
+
+                    <!-- Timeline Progress -->
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 30px; padding: 0 10px;">
+                        <div style="display: flex; flex-direction: column; align-items: center; width: 45%; text-align: center;">
+                            <div style="width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #2B7A4B; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+                                <i data-lucide="check" style="color: #2B7A4B; width: 13px; height: 13px;"></i>
+                            </div>
+                            <div style="font-size: 11px; font-weight: 600; color: #333; margin-bottom: 4px;">Pix em andamento</div>
+                            <div style="font-size: 11px; color: #666; font-weight: 400; line-height: 1.3;" id="c6-comp-timeline-date1">14/09/2026<br>16:42</div>
+                        </div>
+
+                        <div style="height: 1.5px; background: #CCCCCC; flex: 1; margin-top: 10px;"></div>
+
+                        <div style="display: flex; flex-direction: column; align-items: center; width: 45%; text-align: center;">
+                            <div style="width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #2B7A4B; background: #FFFFFF; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+                                <i data-lucide="check" style="color: #2B7A4B; width: 13px; height: 13px;"></i>
+                            </div>
+                            <div style="font-size: 11px; font-weight: 600; color: #333; margin-bottom: 4px;">Pix realizado!</div>
+                            <div style="font-size: 11px; color: #666; font-weight: 400; line-height: 1.3;" id="c6-comp-timeline-date2">14/09/2026<br>16:42</div>
+                        </div>
+                    </div>
+
+                    <!-- Destinatário / Recipient Section -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #F4F4F6; color: #555; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; margin-bottom: 12px;" id="c6-dest-avatar">
+                            MS
+                        </div>
+                        <div style="font-size: 16px; font-weight: 500; color: #222222; margin-bottom: 6px; letter-spacing: -0.2px;" id="c6-dest-name">Matheus Tadeo Zilmann Da Silva</div>
+                        <div style="font-size: 12px; color: #555555; font-weight: 400; line-height: 1.5;">
+                            <div>Banco: <span id="c6-dest-bank" style="color: #333;">380 - PICPAY</span></div>
+                            <div>Agência: <span id="c6-dest-agency" style="color: #333;">*****1</span></div>
+                            <div>Conta: <span id="c6-dest-account" style="color: #333;">******5-2</span></div>
+                        </div>
+                    </div>
+
+                    <div style="height: 1px; background: #F0F0F0; margin: 24px 0;"></div>
+
+                    <!-- Details Grid -->
+                    <div style="display: flex; flex-direction: column; gap: 18px;">
+                        <div>
+                            <div style="color: #8E8E93; font-size: 11px; font-weight: 400; margin-bottom: 3px;">Código de autenticação</div>
+                            <div style="font-size: 13px; font-weight: 700; color: #1C1C1E; word-break: break-all; letter-spacing: 0.2px;" id="c6-comp-auth">01M2GQ1SD3T2ES45FSTFG2E2H9</div>
+                        </div>
+
+                        <div>
+                            <div style="color: #8E8E93; font-size: 11px; font-weight: 400; margin-bottom: 3px;">ID da Transação</div>
+                            <div style="font-size: 13px; font-weight: 700; color: #1C1C1E; word-break: break-all; letter-spacing: 0.2px;" id="c6-comp-id">E318724952026091419412I6dKUYtvz8</div>
+                        </div>
+
+                        <div>
+                            <div style="color: #8E8E93; font-size: 11px; font-weight: 400; margin-bottom: 3px;">Chave</div>
+                            <div style="font-size: 13px; font-weight: 700; color: #1C1C1E; word-break: break-all; letter-spacing: 0.2px;" id="c6-comp-key">51fd3a0a-90e0-4e9d-a502-86f8a1fe262f</div>
+                        </div>
+
+                        <div>
+                            <div style="color: #8E8E93; font-size: 11px; font-weight: 400; margin-bottom: 3px;">CPF / CNPJ</div>
+                            <div style="font-size: 13px; font-weight: 700; color: #1C1C1E;" id="c6-comp-cpf">***.564.969-**</div>
+                        </div>
+
+                        <div>
+                            <div style="color: #8E8E93; font-size: 11px; font-weight: 400; margin-bottom: 3px;">Valor</div>
+                            <div style="font-size: 16px; font-weight: 800; color: #1C1C1E;" id="c6-comp-amount">R$ 15.800,00</div>
+                        </div>
+
+                        <div>
+                            <div style="color: #8E8E93; font-size: 11px; font-weight: 400; margin-bottom: 3px;">Data e horário da transação</div>
+                            <div style="font-size: 13px; font-weight: 700; color: #1C1C1E;" id="c6-comp-full-datetime">segunda-feira, 14 de setembro de 2026, 16:42</div>
+                        </div>
+                    </div>
+
+                    <div style="height: 1px; background: #F0F0F0; margin: 24px 0;"></div>
+
+                    <!-- Conta de Origem -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="font-size: 16px; font-weight: 700; color: #1C1C1E; margin-bottom: 16px;">Conta de origem</div>
+                        <div style="position: relative; width: 36px; height: 36px; margin-bottom: 12px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: #F4F4F6; color: #555; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500;" id="c6-orig-avatar">
+                                MS
+                            </div>
+                            <div style="position: absolute; bottom: -3px; right: -7px; background: #000000; color: #FFFFFF; font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 6px; border: 1.5px solid #FFFFFF; letter-spacing: -0.2px; line-height: 1;">C6</div>
+                        </div>
+                        <div style="font-size: 15px; font-weight: 500; color: #222222; margin-bottom: 6px; text-transform: uppercase;" id="c6-orig-name">MATHEUS TADEO ZILMANN DA SILVA</div>
+                        <div style="font-size: 12px; color: #555555; font-weight: 400; line-height: 1.5;">
+                            <div>Banco: <span id="c6-orig-bank" style="color: #333;">336 - Banco C6 S.A.</span></div>
+                            <div>Agência: <span id="c6-orig-agency" style="color: #333;">*****1</span></div>
+                            <div>Conta: <span id="c6-orig-account" style="color: #333;">******7-5</span></div>
+                        </div>
+                    </div>
+
+                    <div style="height: 1px; background: #F0F0F0; margin: 24px 0;"></div>
+
+                    <!-- Support / Footer -->
+                    <div style="font-size: 11px; color: #555555; font-weight: 400; line-height: 1.45; display: flex; flex-direction: column; gap: 14px;">
+                        <div>
+                            Em caso de dúvidas ou se precisar de orientações, acesse o chat no app ou ligue para os telefones abaixo.<br>
+                            Você deverá informar o ID da transação que aparece nesse comprovante.
+                        </div>
+
+                        <div>
+                            <div style="font-weight: 400; color: #555555; margin-bottom: 3px;">Central de Relacionamento - segunda a sexta (exceto feriados): 8h às 23h</div>
+                            <div style="color: #555555; font-weight: 400; margin-bottom: 4px;">Capitais e regiões metropolitanas</div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B68C4; font-size: 12px;">
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: #E8F1FC; display: flex; align-items: center; justify-content: center; color: #2B68C4;">
+                                    <i data-lucide="phone" style="width: 10px; height: 10px;"></i>
+                                </div>
+                                3003 6116
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="color: #555555; font-weight: 400; margin-bottom: 4px;">Demais regiões</div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B68C4; font-size: 12px;">
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: #E8F1FC; display: flex; align-items: center; justify-content: center; color: #2B68C4;">
+                                    <i data-lucide="phone" style="width: 10px; height: 10px;"></i>
+                                </div>
+                                0800 660 6116
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="font-weight: 400; color: #555555; margin-bottom: 4px;">SAC (reclamações, cancelamentos, dúvidas, informações e sugestões) – atendimento 24h</div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B68C4; font-size: 12px;">
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: #E8F1FC; display: flex; align-items: center; justify-content: center; color: #2B68C4;">
+                                    <i data-lucide="phone" style="width: 10px; height: 10px;"></i>
+                                </div>
+                                0800 660 0060
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="font-weight: 400; color: #555555; margin-bottom: 3px;">Ouvidoria</div>
+                            <div style="color: #555555; font-weight: 400; margin-bottom: 4px;">Segunda à sexta, exceto feriados, das 9h às 18h.</div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B68C4; font-size: 12px;">
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: #E8F1FC; display: flex; align-items: center; justify-content: center; color: #2B68C4;">
+                                    <i data-lucide="phone" style="width: 10px; height: 10px;"></i>
+                                </div>
+                                0800 660 6060
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Sawtooth Ticket Cut -->
+                <div style="height: 6px; border-top: 1.5px dashed #DDD; margin-top: 10px;"></div>
+            </div>
+            
+            <div class="no-pdf" style="padding: 20px 24px 130px 24px; background: white; width: 100%; max-width: 350px; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 10px;">
+                <button id="btn-share-pdf" class="btn-primary" style="width: 100%; border: none; padding: 16px; border-radius: 30px; font-weight: 700; background: var(--nu-purple); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i data-lucide="file-text" style="width: 18px; height: 18px;"></i> Compartilhar PDF
+                </button>
+                <button id="btn-share-img" class="btn-primary" style="width: 100%; border: 1.5px solid var(--nu-purple); padding: 16px; border-radius: 30px; font-weight: 700; background: transparent; color: var(--nu-purple); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i data-lucide="image" style="width: 18px; height: 18px;"></i> Compartilhar Imagem
+                </button>
+            </div>
+        </div>
+
+        <div id="toast" class="toast hidden">Funcionalidade em breve!</div>
+    </div>
+
+    <!-- Bibliotecas para PDF e Imagem -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+            if (window.caches) {
+                caches.keys().then(names => {
+                    for (let name of names) caches.delete(name);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
