@@ -393,6 +393,25 @@ function updateBankUI() {
         if (extraFields) extraFields.style.display = 'none';
         if (floatingNav) floatingNav.style.display = 'flex';
     }
+    updateThemeColor();
+}
+
+function updateThemeColor(screenId) {
+    let color = '#820AD1';
+    if (currentBank === 'itau') {
+        const activeScreen = document.querySelector('.screen:not(.hidden)');
+        const sId = screenId || (activeScreen ? activeScreen.id.replace('screen-itau-', '').replace('screen-', '') : '');
+        if (sId === 'home' || sId === 'itau-home') color = '#000929';
+        else if (sId === 'extrato' || sId === 'itau-extrato') color = '#F1F5F8';
+        else color = '#F1F5F8';
+    } else {
+        color = '#820AD1';
+    }
+
+    let metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+        metaTheme.setAttribute('content', color);
+    }
 }
 
 let currentSearch = '';
@@ -814,6 +833,8 @@ function navigateTo(screenId) {
             if (battFill) battFill.style.background = '#FFFFFF';
         }
     }
+
+    updateThemeColor(screenId);
 
     if (screenId === 'extrato') {
         if (currentBank === 'itau') {
