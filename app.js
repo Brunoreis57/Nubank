@@ -287,7 +287,15 @@ function loadPersistedData() {
             ...group,
             date: group.date.includes('22 de setembro') ? group.date.replace('22 de setembro', '30 de outubro') : group.date,
             dayBalance: (group.date.includes('30 de outubro') || group.date.includes('22 de setembro')) ? 'Saldo do dia: - R$ 32.484,56' : group.dayBalance,
-            items: group.items.filter(item => !(item.title.includes('MATHEUS TADEO ZILMANN DA SILVA') && item.amount.includes('60.000')))
+            items: group.items.map(item => {
+                if (item.title && item.title.startsWith('Pix enviado - ')) {
+                    const cleanName = item.title.replace('Pix enviado - ', '').replace('...', '').trim();
+                    if (cleanName && isNaN(cleanName.replace(/\D/g, ''))) {
+                        return { ...item, title: cleanName, tagText: 'PIX ENVIADO' };
+                    }
+                }
+                return item;
+            })
         })).filter(group => group.items.length > 0);
         
         const hasDebitoFin = transactions.some(g => g.items && g.items.some(i => i.title && i.title.toLowerCase().includes('financiamento')));
@@ -1111,7 +1119,7 @@ document.getElementById('btn-finish-transfer').onclick = function() {
     const amount = document.getElementById('input-transfer-amount').value;
     const key = document.getElementById('input-transfer-key').value;
     const bank = document.getElementById('input-transfer-bank').value;
-    const destName = document.getElementById('input-transfer-dest-name').value || 'AGUIA EXPRESS LTDA';
+    const destName = document.getElementById('input-transfer-dest-name').value.trim() || 'MATHEUS TADEO ZILMANN DA SILVA';
     const origName = document.getElementById('input-transfer-orig-name').value || currentUserName;
     const origCpf = document.getElementById('input-transfer-orig-cpf').value || '***.344.313-**';
     const origBank = document.getElementById('input-transfer-orig-bank').value || 'NU PAGAMENTOS - IP';
@@ -1392,6 +1400,15 @@ function updateItauComprovante({ amount, key, bank, destName, origName, origCpf,
     const controlVal = customControl || defaultControl;
     const compControlEl = document.getElementById('itau-comp-control');
     if (compControlEl) compControlEl.innerText = controlVal;
+
+    // Página 2: Data e Hora no formato "01/10/2026 às 13:26:57.589421"
+    const hh = String(transferDate.getHours()).padStart(2, '0');
+    const min = String(transferDate.getMinutes()).padStart(2, '0');
+    const ss = String(transferDate.getSeconds()).padStart(2, '0');
+    const micros = Math.floor(100000 + Math.random() * 900000).toString();
+    const page2Text = `${dateFormattedShort} às ${hh}:${min}:${ss}.${micros}`;
+    const page2El = document.getElementById('itau-page2-datetime');
+    if (page2El) page2El.innerText = page2Text;
 }
 
 function switchReceiptModel(model) {
@@ -1511,11 +1528,12 @@ function generatePDF() {
     document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'none');
 
     const opt = {
-        margin:       [10, 5, 10, 5], // top, left, bottom, right
+        margin:       isItau ? [8, 5, 8, 5] : [10, 5, 10, 5],
         filename:     pdfFilename,
         image:        { type: 'jpeg', quality: 1.0 },
         html2canvas:  { scale: 3, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: [102.6, 260], orientation: 'portrait' }
+        jsPDF:        { unit: 'mm', format: [102.6, 265], orientation: 'portrait' },
+        pagebreak:    { mode: ['css', 'legacy'], before: '.html2pdf__page-break' }
     };
     
     showToast(`Gerando comprovante ${bankName} em PDF...`);
