@@ -1065,6 +1065,7 @@ document.getElementById('btn-finish-transfer').onclick = function() {
     const origName = document.getElementById('input-transfer-orig-name').value || currentUserName;
     const origCpf = document.getElementById('input-transfer-orig-cpf').value || '***.344.313-**';
     const origBank = document.getElementById('input-transfer-orig-bank').value || 'NU PAGAMENTOS - IP';
+    const origAgencyAccount = (document.getElementById('input-transfer-orig-agency-account') ? document.getElementById('input-transfer-orig-agency-account').value : '') || '8668/0099853-0';
     const dateVal = document.getElementById('input-transfer-date').value;
     const timeVal = document.getElementById('input-transfer-time').value;
 
@@ -1132,6 +1133,19 @@ document.getElementById('btn-finish-transfer').onclick = function() {
         destName: destName,
         origName: origName,
         origCpf: origCpf,
+        transferDate: transferDate,
+        transId: transId
+    });
+
+    // Atualizar comprovante modelo Itaú
+    updateItauComprovante({
+        amount: formattedAmount,
+        key: key,
+        bank: bank,
+        destName: destName,
+        origName: origName,
+        origCpf: origCpf,
+        origAgencyAccount: origAgencyAccount,
         transferDate: transferDate,
         transId: transId
     });
@@ -1232,29 +1246,126 @@ function updateC6Comprovante({ amount, key, bank, destName, origName, origCpf, t
     document.getElementById('c6-comp-full-datetime').innerText = fullDateStr;
 }
 
+function updateItauComprovante({ amount, key, bank, destName, origName, origCpf, origAgencyAccount, transferDate, transId }) {
+    const monthsLower = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    const dd = String(transferDate.getDate()).padStart(2, '0');
+    const mmIndex = transferDate.getMonth();
+    const yyyy = transferDate.getFullYear();
+    const headerDateStr = `${dd} ${monthsLower[mmIndex]} de ${yyyy}`;
+    
+    const dateFormattedShort = `${dd}/${String(mmIndex + 1).padStart(2, '0')}/${yyyy}`;
+
+    const dateHeaderEl = document.getElementById('itau-comp-date-header');
+    if (dateHeaderEl) dateHeaderEl.innerText = headerDateStr;
+    
+    // Pagador
+    const origNameEl = document.getElementById('itau-orig-name');
+    if (origNameEl) origNameEl.innerText = (origName || 'MZ TRANSPORTES LTDA').toUpperCase();
+    
+    const origCpfEl = document.getElementById('itau-orig-cpf');
+    if (origCpfEl) origCpfEl.innerText = origCpf || '35.267.862/0001-60';
+
+    const origAccEl = document.getElementById('itau-orig-agency-account');
+    if (origAccEl) origAccEl.innerText = origAgencyAccount || '8668/0099853-0';
+
+    // Recebedor
+    const destNameEl = document.getElementById('itau-dest-name');
+    if (destNameEl) destNameEl.innerText = (destName || 'MATHEUS TADEO ZILMANN DA SILVA').toUpperCase();
+
+    const destKeyEl = document.getElementById('itau-dest-key');
+    if (destKeyEl) destKeyEl.innerText = key || '06956496984';
+
+    let maskedDestCpf = '***564969**';
+    const cleanKeyDigits = key ? key.replace(/\D/g, '') : '';
+    if (cleanKeyDigits.length === 11) {
+        maskedDestCpf = `***${cleanKeyDigits.substring(3, 9)}**`;
+    }
+    const destCpfEl = document.getElementById('itau-dest-cpf');
+    if (destCpfEl) destCpfEl.innerText = maskedDestCpf;
+
+    let destBankFormatted = bank;
+    if (bank === 'Nubank') destBankFormatted = 'NU PAGAMENTOS - IP';
+    else if (bank === 'C6 Bank' || bank === 'C6') destBankFormatted = 'BCO C6 S.A.';
+    else if (bank === 'Itaú' || bank === 'Itaú Unibanco') destBankFormatted = 'ITAÚ UNIBANCO S.A.';
+    else if (bank === 'Bradesco') destBankFormatted = 'BCO BRADESCO S.A.';
+    else if (bank === 'Santander') destBankFormatted = 'BCO SANTANDER (BRASIL) S.A.';
+    else if (bank === 'Banco do Brasil') destBankFormatted = 'BANCO DO BRASIL S.A.';
+    else if (bank === 'Inter') destBankFormatted = 'BCO INTER S.A.';
+
+    const destBankEl = document.getElementById('itau-dest-bank');
+    if (destBankEl) destBankEl.innerText = destBankFormatted;
+
+    // Transação
+    const compAmountEl = document.getElementById('itau-comp-amount');
+    if (compAmountEl) compAmountEl.innerText = `R$ ${amount}`;
+
+    const compDateEl = document.getElementById('itau-comp-date');
+    if (compDateEl) compDateEl.innerText = dateFormattedShort;
+
+    const hexAuth = (transId || Math.random().toString(36)).toUpperCase().replace(/[^A-Z0-9]/g, '');
+    const authFull = (hexAuth + '155E41B2CAC12EB82A7C83CAD2E4BAAE44960B68').substring(0, 40);
+    const compAuthEl = document.getElementById('itau-comp-auth');
+    if (compAuthEl) compAuthEl.innerText = authFull;
+    
+    const compIdEl = document.getElementById('itau-comp-id');
+    if (compIdEl) compIdEl.innerText = transId || ('E60701190202610011626DY5W' + Math.random().toString(36).substring(2, 9).toUpperCase());
+
+    const randomControl = Math.floor(100000000000000 + Math.random() * 900000000000000).toString();
+    const compControlEl = document.getElementById('itau-comp-control');
+    if (compControlEl) compControlEl.innerText = randomControl;
+}
+
 function switchReceiptModel(model) {
     const nubankEl = document.getElementById('pdf-content');
     const c6El = document.getElementById('c6-pdf-content');
+    const itauEl = document.getElementById('itau-pdf-content');
     const tabNubank = document.getElementById('tab-model-nubank');
     const tabC6 = document.getElementById('tab-model-c6');
+    const tabItau = document.getElementById('tab-model-itau');
 
     if (model === 'c6') {
         if (nubankEl) nubankEl.classList.add('hidden');
+        if (itauEl) itauEl.classList.add('hidden');
         if (c6El) c6El.classList.remove('hidden');
         if (tabNubank) {
             tabNubank.style.background = 'transparent';
             tabNubank.style.color = '#666';
         }
+        if (tabItau) {
+            tabItau.style.background = 'transparent';
+            tabItau.style.color = '#666';
+        }
         if (tabC6) {
             tabC6.style.background = '#000';
             tabC6.style.color = 'white';
         }
+    } else if (model === 'itau') {
+        if (nubankEl) nubankEl.classList.add('hidden');
+        if (c6El) c6El.classList.add('hidden');
+        if (itauEl) itauEl.classList.remove('hidden');
+        if (tabNubank) {
+            tabNubank.style.background = 'transparent';
+            tabNubank.style.color = '#666';
+        }
+        if (tabC6) {
+            tabC6.style.background = 'transparent';
+            tabC6.style.color = '#666';
+        }
+        if (tabItau) {
+            tabItau.style.background = '#000066';
+            tabItau.style.color = 'white';
+        }
     } else {
         if (c6El) c6El.classList.add('hidden');
+        if (itauEl) itauEl.classList.add('hidden');
         if (nubankEl) nubankEl.classList.remove('hidden');
         if (tabC6) {
             tabC6.style.background = 'transparent';
             tabC6.style.color = '#666';
+        }
+        if (tabItau) {
+            tabItau.style.background = 'transparent';
+            tabItau.style.color = '#666';
         }
         if (tabNubank) {
             tabNubank.style.background = 'var(--nu-purple)';
@@ -1272,6 +1383,11 @@ if (tabModelNubank) {
 const tabModelC6 = document.getElementById('tab-model-c6');
 if (tabModelC6) {
     tabModelC6.onclick = () => switchReceiptModel('c6');
+}
+
+const tabModelItau = document.getElementById('tab-model-itau');
+if (tabModelItau) {
+    tabModelItau.onclick = () => switchReceiptModel('itau');
 }
 
 document.getElementById('btn-schedule-transfer').onclick = () => {
@@ -1305,7 +1421,12 @@ document.getElementById('btn-share-pdf-top').onclick = function() {
 function generatePDF() {
     const targetEl = document.querySelector('#screen-pix-comprovante .receipt-card:not(.hidden)') || document.getElementById('pdf-content');
     const isC6 = targetEl.id === 'c6-pdf-content';
-    const pdfFilename = isC6 ? 'comprovante-c6bank.pdf' : 'comprovante-nubank.pdf';
+    const isItau = targetEl.id === 'itau-pdf-content';
+
+    let pdfFilename = 'comprovante-nubank.pdf';
+    let bankName = 'Nubank';
+    if (isC6) { pdfFilename = 'comprovante-c6bank.pdf'; bankName = 'C6 Bank'; }
+    else if (isItau) { pdfFilename = 'comprovante-itau.pdf'; bankName = 'Itaú'; }
     
     // Ocultar botões que não devem sair no PDF
     document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'none');
@@ -1318,7 +1439,7 @@ function generatePDF() {
         jsPDF:        { unit: 'mm', format: [102.6, 260], orientation: 'portrait' }
     };
     
-    showToast(`Gerando comprovante ${isC6 ? 'C6 Bank' : 'Nubank'} em PDF...`);
+    showToast(`Gerando comprovante ${bankName} em PDF...`);
     
     // Usar html2pdf para gerar o PDF e então decidir se compartilha ou baixa
     const worker = html2pdf().set(opt).from(targetEl).toPdf().get('pdf');
@@ -1331,7 +1452,7 @@ function generatePDF() {
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
             navigator.share({
                 files: [file],
-                title: isC6 ? 'Comprovante C6 Bank' : 'Comprovante Nubank',
+                title: `Comprovante ${bankName}`,
                 text: 'Segue o comprovante da minha transferência Pix.'
             })
             .then(() => {
@@ -1356,7 +1477,13 @@ function generatePDF() {
 function generateImage() {
     const targetEl = document.querySelector('#screen-pix-comprovante .receipt-card:not(.hidden)') || document.getElementById('pdf-content');
     const isC6 = targetEl.id === 'c6-pdf-content';
-    const imgFilename = isC6 ? 'comprovante-c6bank.png' : 'comprovante-nubank.png';
+    const isItau = targetEl.id === 'itau-pdf-content';
+
+    let imgFilename = 'comprovante-nubank.png';
+    let bankName = 'Nubank';
+    if (isC6) { imgFilename = 'comprovante-c6bank.png'; bankName = 'C6 Bank'; }
+    else if (isItau) { imgFilename = 'comprovante-itau.png'; bankName = 'Itaú'; }
+
     const scrollContainer = document.getElementById('screen-pix-comprovante');
     
     // Salvar posição de scroll original e rolar até o topo para captura limpa
@@ -1366,7 +1493,7 @@ function generateImage() {
     // Ocultar botões no-pdf
     document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'none');
 
-    showToast(`Gerando imagem ${isC6 ? 'C6 Bank' : 'Nubank'}...`);
+    showToast(`Gerando imagem ${bankName}...`);
 
     const h2c = (typeof html2canvas !== 'undefined') ? html2canvas : (window.html2canvas || null);
 

@@ -896,10 +896,16 @@
                     </div>
 
                     <div class="config-field">
+                        <label>Sua Agência e Conta (Origem)</label>
+                        <input type="text" id="input-transfer-orig-agency-account" class="config-input" value="8668/0099853-0">
+                    </div>
+
+                    <div class="config-field">
                         <label for="input-transfer-model">Modelo do Comprovante</label>
                         <select id="input-transfer-model" class="config-input">
                             <option value="nubank">Nubank (Padrão)</option>
                             <option value="c6">C6 Bank</option>
+                            <option value="itau">Itaú</option>
                         </select>
                     </div>
 
@@ -923,6 +929,7 @@
                 <div style="display: flex; gap: 6px; background: #E5E5E5; padding: 4px; border-radius: 20px;">
                     <button id="tab-model-nubank" style="padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; border: none; background: var(--nu-purple); color: white; cursor: pointer; transition: all 0.2s;">Nubank</button>
                     <button id="tab-model-c6" style="padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; border: none; background: transparent; color: #666; cursor: pointer; transition: all 0.2s;">C6 Bank</button>
+                    <button id="tab-model-itau" style="padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; border: none; background: transparent; color: #666; cursor: pointer; transition: all 0.2s;">Itaú</button>
                 </div>
 
                 <div id="btn-share-pdf-top" class="interactive" style="color: var(--nu-purple);">
@@ -1193,6 +1200,94 @@
 
                 <!-- Bottom Sawtooth Ticket Cut -->
                 <div style="height: 6px; border-top: 1.5px dashed #DDD; margin-top: 10px;"></div>
+            </div>
+
+            <!-- ITAÚ RECEIPT TEMPLATE -->
+            <div id="itau-pdf-content" class="receipt-card hidden" style="width: 350px; min-width: 350px; background: #FFFFFF; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; border-radius: 0; padding: 24px 22px 35px 22px; margin-bottom: 20px; color: #000000; box-sizing: border-box;">
+                
+                <!-- Top Right Page Indicator -->
+                <div style="text-align: right; font-size: 11px; color: #333333; font-weight: 600; margin-bottom: 15px;">1 de 2</div>
+
+                <!-- Header Logo -->
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 38px; height: 38px; background-color: #000066; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                        <span style="color: #FFFFFF; font-weight: 800; font-size: 14px; font-family: Arial, sans-serif; letter-spacing: -0.5px;">itaú</span>
+                    </div>
+                </div>
+
+                <!-- Title and Date -->
+                <h1 style="font-size: 19px; font-weight: 700; color: #111111; margin: 0 0 4px 0; letter-spacing: -0.3px;">comprovante de transferência</h1>
+                <div id="itau-comp-date-header" style="font-size: 12px; color: #555555; margin-bottom: 28px;">02 out de 2026</div>
+
+                <!-- Section: dados do pagador -->
+                <div style="font-size: 12px; font-weight: 600; color: #333333; margin-bottom: 12px;">dados do pagador</div>
+
+                <div style="display: flex; flex-direction: column; gap: 0; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">nome</span>
+                        <span id="itau-orig-name" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right; max-width: 65%; word-break: break-word;">MZ TRANSPORTES LTDA</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">CPF/CNPJ do pagador</span>
+                        <span id="itau-orig-cpf" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">35.267.862/0001-60</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">agência/conta</span>
+                        <span id="itau-orig-agency-account" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">8668/0099853-0</span>
+                    </div>
+                </div>
+
+                <!-- Section: dados do recebedor -->
+                <div style="font-size: 12px; font-weight: 600; color: #333333; margin-bottom: 12px; margin-top: 24px;">dados do recebedor</div>
+
+                <div style="display: flex; flex-direction: column; gap: 0; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">nome do recebedor</span>
+                        <span id="itau-dest-name" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right; max-width: 65%; word-break: break-word;">MATHEUS TADEO ZILMANN DA SILVA</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">chave</span>
+                        <span id="itau-dest-key" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right; max-width: 65%; word-break: break-all;">06956496984</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">CPF/CNPJ do recebedor</span>
+                        <span id="itau-dest-cpf" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">***564969**</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">instituição</span>
+                        <span id="itau-dest-bank" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">BCO C6 S.A.</span>
+                    </div>
+                </div>
+
+                <!-- Section: dados da transação -->
+                <div style="font-size: 12px; font-weight: 600; color: #333333; margin-bottom: 12px; margin-top: 24px;">dados da transação</div>
+
+                <div style="display: flex; flex-direction: column; gap: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">valor</span>
+                        <span id="itau-comp-amount" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">R$ 60.000,00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">data da transferência</span>
+                        <span id="itau-comp-date" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">01/10/2026</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">tipo de pagamento</span>
+                        <span style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">PIX TRANSFERENCIA</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">autenticação no comprovante</span>
+                        <span id="itau-comp-auth" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right; max-width: 55%; word-break: break-all;">155E41B2CAC12EB82A7C83CAD2E4BAAE44960B68</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">ID da transação</span>
+                        <span id="itau-comp-id" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right; max-width: 55%; word-break: break-all;">E60701190202610011626DY5W16MDU59</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 0; border-bottom: 1px solid #EBEBEB;">
+                        <span style="font-size: 11px; color: #444444; font-weight: 400;">controle</span>
+                        <span id="itau-comp-control" style="font-size: 11px; color: #000000; font-weight: 700; text-align: right;">000790065161164</span>
+                    </div>
+                </div>
             </div>
             
             <div class="no-pdf" style="padding: 20px 24px 130px 24px; background: white; width: 100%; max-width: 350px; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 10px;">
