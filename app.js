@@ -67,7 +67,7 @@ var DEFAULT_TRANSACTIONS = [
         { title: 'Débito de financiamento', time: '19:16 · Débito', amount: '- R$ 32.484,56', type: 'bill', tagText: 'DÉBITO DE FINANCIAMENTO' },
         { title: 'DF TUR 01/10', time: '19:15 · Pix', amount: '+ R$ 60.000,00', type: 'pix-in' }
     ] },
-    { date: '22 de setembro de 2026', dayBalance: 'Saldo do dia: - R$ 32.484,56', items: [
+    { date: '30 de outubro de 2026', dayBalance: 'Saldo do dia: - R$ 32.484,56', items: [
         { title: 'MATHEUS TADEO ZILMANN DA SILVA', time: '15:30 · Pix', amount: '- R$ 5.000,00', type: 'pix-out' }
     ] },
     { date: '31 Mar', items: [
@@ -285,7 +285,8 @@ function loadPersistedData() {
         transactions = JSON.parse(savedTransactions);
         transactions = transactions.map(group => ({
             ...group,
-            dayBalance: group.date.includes('22 de setembro') ? 'Saldo do dia: - R$ 32.484,56' : group.dayBalance,
+            date: group.date.includes('22 de setembro') ? group.date.replace('22 de setembro', '30 de outubro') : group.date,
+            dayBalance: (group.date.includes('30 de outubro') || group.date.includes('22 de setembro')) ? 'Saldo do dia: - R$ 32.484,56' : group.dayBalance,
             items: group.items.filter(item => !(item.title.includes('MATHEUS TADEO ZILMANN DA SILVA') && item.amount.includes('60.000')))
         })).filter(group => group.items.length > 0);
         
@@ -564,10 +565,10 @@ function renderItauTransactions() {
         header.innerText = group.date;
         container.appendChild(header);
 
-        if (group.dayBalance || group.date.includes('22 de setembro')) {
+        if (group.dayBalance || group.date.includes('30 de outubro') || group.date.includes('22 de setembro')) {
             const sub = document.createElement('div');
             sub.style = 'font-size: 13px; color: #475569; margin-bottom: 10px; font-weight: 500;';
-            sub.innerText = (group.date.includes('22 de setembro') ? 'Saldo do dia: - R$ 32.484,56' : group.dayBalance) || 'Saldo do dia: - R$ 32.484,56';
+            sub.innerText = ((group.date.includes('30 de outubro') || group.date.includes('22 de setembro')) ? 'Saldo do dia: - R$ 32.484,56' : group.dayBalance) || 'Saldo do dia: - R$ 32.484,56';
             container.appendChild(sub);
         }
 
