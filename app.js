@@ -1057,6 +1057,56 @@ if (btnTransferNow) {
     };
 }
 
+// Botão para gerar ID de Transação aleatório
+const btnGenTxid = document.getElementById('btn-gen-txid');
+if (btnGenTxid) {
+    btnGenTxid.onclick = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const dateCompact = `${year}${month}${day}${hh}${mm}`;
+        const randomSuffix = Math.random().toString(36).substring(2, 8).toUpperCase() + Math.random().toString(36).substring(2, 8).toUpperCase();
+        const txidInput = document.getElementById('input-transfer-txid');
+        if (txidInput) {
+            txidInput.value = `E60701190${dateCompact}${randomSuffix}`.substring(0, 32);
+            showToast('ID de transação gerado!');
+        }
+    };
+}
+
+// Botão para gerar Código de Autenticação aleatório
+const btnGenAuth = document.getElementById('btn-gen-auth');
+if (btnGenAuth) {
+    btnGenAuth.onclick = () => {
+        const chars = '0123456789ABCDEF';
+        let result = '';
+        for (let i = 0; i < 40; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const authInput = document.getElementById('input-transfer-auth');
+        if (authInput) {
+            authInput.value = result;
+            showToast('Autenticação gerada!');
+        }
+    };
+}
+
+// Botão para gerar Controle aleatório
+const btnGenControl = document.getElementById('btn-gen-control');
+if (btnGenControl) {
+    btnGenControl.onclick = () => {
+        const randomDigits = Math.floor(1000000000000 + Math.random() * 9000000000000).toString().padStart(12, '0');
+        const controlInput = document.getElementById('input-transfer-control');
+        if (controlInput) {
+            controlInput.value = `000${randomDigits}`;
+            showToast('Controle gerado!');
+        }
+    };
+}
+
 document.getElementById('btn-finish-transfer').onclick = function() {
     const amount = document.getElementById('input-transfer-amount').value;
     const key = document.getElementById('input-transfer-key').value;
@@ -1085,6 +1135,10 @@ document.getElementById('btn-finish-transfer').onclick = function() {
     document.getElementById('comp-dest-bank').innerText = bank === 'Nubank' ? 'NU PAGAMENTOS - IP' : bank;
     document.getElementById('comp-orig-name').innerText = origName;
     document.getElementById('comp-orig-cpf').innerText = origCpf;
+
+    const customTxid = document.getElementById('input-transfer-txid') ? document.getElementById('input-transfer-txid').value.trim() : '';
+    const customAuth = document.getElementById('input-transfer-auth') ? document.getElementById('input-transfer-auth').value.trim() : '';
+    const customControl = document.getElementById('input-transfer-control') ? document.getElementById('input-transfer-control').value.trim() : '';
 
     let transferDate = new Date();
     if (dateVal) {
@@ -1118,10 +1172,10 @@ document.getElementById('btn-finish-transfer').onclick = function() {
     const formattedTime = `${hh}:${mm}:${ss}`;
     document.getElementById('comp-datetime').innerText = `${formattedDate} - ${formattedTime}`;
 
-    // Gerar ID de transação realista incorporando a data e hora selecionadas
+    // Gerar ID de transação realista incorporando a data e hora selecionadas se não especificado pelo usuário
     const dateCompact = `${year}${String(monthIndex + 1).padStart(2, '0')}${String(day).padStart(2, '0')}${hh}${mm}`;
     const randomSuffix = Math.random().toString(36).substring(2, 8) + Math.random().toString(36).substring(2, 6);
-    const transId = `E18236120${dateCompact}s${randomSuffix}`;
+    const transId = customTxid || `E18236120${dateCompact}s${randomSuffix}`;
     document.getElementById('comp-id').innerText = transId;
     document.getElementById('comp-id-footer').innerText = transId;
 
@@ -1134,7 +1188,8 @@ document.getElementById('btn-finish-transfer').onclick = function() {
         origName: origName,
         origCpf: origCpf,
         transferDate: transferDate,
-        transId: transId
+        transId: transId,
+        customAuth: customAuth
     });
 
     // Atualizar comprovante modelo Itaú
@@ -1147,7 +1202,9 @@ document.getElementById('btn-finish-transfer').onclick = function() {
         origCpf: origCpf,
         origAgencyAccount: origAgencyAccount,
         transferDate: transferDate,
-        transId: transId
+        transId: transId,
+        customAuth: customAuth,
+        customControl: customControl
     });
 
     // Selecionar modelo de comprovante escolhido
@@ -1164,16 +1221,28 @@ document.getElementById('btn-finish-transfer').onclick = function() {
         updateBalanceUI();
         
         // Adicionar ao extrato com a data e horário definidos
+        const monthsFull = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
         const currentYear = new Date().getFullYear();
-        const dateGroupStr = (year === currentYear)
-            ? `${String(day).padStart(2, '0')} ${monthsShort[monthIndex]}`
-            : `${String(day).padStart(2, '0')} ${monthsShort[monthIndex]} ${year}`;
+        const today = new Date();
+        const isToday = (transferDate.getDate() === today.getDate() && 
+                        transferDate.getMonth() === today.getMonth() && 
+                        transferDate.getFullYear() === today.getFullYear());
+        
+        let dateGroupStr = '';
+        if (isToday) {
+            dateGroupStr = `Hoje, ${String(day).padStart(2, '0')} de ${monthsFull[monthIndex]} de ${year}`;
+        } else {
+            dateGroupStr = (year === currentYear)
+                ? `${String(day).padStart(2, '0')} de ${monthsFull[monthIndex]}`
+                : `${String(day).padStart(2, '0')} de ${monthsFull[monthIndex]} de ${year}`;
+        }
 
         const newItem = {
-            title: `Pix enviado - ${key.substring(0, 15)}...`,
+            title: destName || 'Transferência enviada',
             time: `${hh}:${mm} · Pix`,
-            amount: `R$ ${amount}`,
-            type: 'pix-out'
+            amount: `- R$ ${formattedAmount}`,
+            type: 'pix-out',
+            tagText: 'PIX ENVIADO'
         };
 
         const existingGroup = transactions.find(g => g.date.toLowerCase() === dateGroupStr.toLowerCase());
@@ -1184,18 +1253,22 @@ document.getElementById('btn-finish-transfer').onclick = function() {
         }
         savePersistedData();
         renderTransactions();
+        if (typeof renderItauTransactions === 'function') {
+            renderItauTransactions();
+        }
     }
 
     navigateTo('pix-comprovante');
     showToast('Transferência realizada!');
 };
 
-function updateC6Comprovante({ amount, key, bank, destName, origName, origCpf, transferDate, transId }) {
-    const authCode = Math.random().toString(36).substring(2, 10).toUpperCase() + 
-                     Math.random().toString(36).substring(2, 10).toUpperCase() + 
-                     Math.random().toString(36).substring(2, 10).toUpperCase();
+function updateC6Comprovante({ amount, key, bank, destName, origName, origCpf, transferDate, transId, customAuth }) {
+    const defaultAuth = (Math.random().toString(36).substring(2, 10) + 
+                         Math.random().toString(36).substring(2, 10) + 
+                         Math.random().toString(36).substring(2, 10)).toUpperCase().substring(0, 26);
+    const authCode = customAuth || defaultAuth;
     
-    document.getElementById('c6-comp-auth').innerText = authCode.substring(0, 26);
+    document.getElementById('c6-comp-auth').innerText = authCode;
     document.getElementById('c6-comp-id').innerText = transId || ('E31872495' + Math.random().toString(36).substring(2, 15));
     document.getElementById('c6-dest-name').innerText = destName;
     
@@ -1214,11 +1287,13 @@ function updateC6Comprovante({ amount, key, bank, destName, origName, origCpf, t
     let bankFormatted = '380 - PICPAY';
     if (bank === 'Nubank') bankFormatted = '260 - Nu Pagamentos S.A.';
     else if (bank === 'C6 Bank') bankFormatted = '336 - Banco C6 S.A.';
-    else if (bank === 'Itaú') bankFormatted = '341 - Banco Itaú Unibanco S.A.';
+    else if (bank === 'Itaú' || bank === 'Itaú Unibanco') bankFormatted = '341 - Banco Itaú Unibanco S.A.';
     else if (bank === 'Bradesco') bankFormatted = '237 - Banco Bradesco S.A.';
     else if (bank === 'Santander') bankFormatted = '033 - Banco Santander (Brasil) S.A.';
     else if (bank === 'Banco do Brasil') bankFormatted = '001 - Banco do Brasil S.A.';
     else if (bank === 'Inter') bankFormatted = '077 - Banco Inter S.A.';
+    else if (bank === 'PicPay') bankFormatted = '380 - PicPay Servicos S.A.';
+    else if (bank === 'CORA SCFI' || bank === 'Cora') bankFormatted = '403 - Cora Sociedade de Crédito, Financiamento e Investimento S.A.';
     else bankFormatted = bank;
 
     document.getElementById('c6-dest-bank').innerText = bankFormatted;
@@ -1246,7 +1321,7 @@ function updateC6Comprovante({ amount, key, bank, destName, origName, origCpf, t
     document.getElementById('c6-comp-full-datetime').innerText = fullDateStr;
 }
 
-function updateItauComprovante({ amount, key, bank, destName, origName, origCpf, origAgencyAccount, transferDate, transId }) {
+function updateItauComprovante({ amount, key, bank, destName, origName, origCpf, origAgencyAccount, transferDate, transId, customAuth, customControl }) {
     const monthsLower = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
     const dd = String(transferDate.getDate()).padStart(2, '0');
     const mmIndex = transferDate.getMonth();
@@ -1291,6 +1366,8 @@ function updateItauComprovante({ amount, key, bank, destName, origName, origCpf,
     else if (bank === 'Santander') destBankFormatted = 'BCO SANTANDER (BRASIL) S.A.';
     else if (bank === 'Banco do Brasil') destBankFormatted = 'BANCO DO BRASIL S.A.';
     else if (bank === 'Inter') destBankFormatted = 'BCO INTER S.A.';
+    else if (bank === 'PicPay') destBankFormatted = 'PICPAY SERVICOS S.A.';
+    else if (bank === 'CORA SCFI' || bank === 'Cora') destBankFormatted = 'CORA SCFI S.A.';
 
     const destBankEl = document.getElementById('itau-dest-bank');
     if (destBankEl) destBankEl.innerText = destBankFormatted;
@@ -1302,17 +1379,19 @@ function updateItauComprovante({ amount, key, bank, destName, origName, origCpf,
     const compDateEl = document.getElementById('itau-comp-date');
     if (compDateEl) compDateEl.innerText = dateFormattedShort;
 
-    const hexAuth = (transId || Math.random().toString(36)).toUpperCase().replace(/[^A-Z0-9]/g, '');
-    const authFull = (hexAuth + '155E41B2CAC12EB82A7C83CAD2E4BAAE44960B68').substring(0, 40);
+    const defaultHexAuth = (transId || Math.random().toString(36)).toUpperCase().replace(/[^A-Z0-9]/g, '');
+    const defaultAuth = (defaultHexAuth + '155E41B2CAC12EB82A7C83CAD2E4BAAE44960B68').substring(0, 40);
+    const authFull = customAuth || defaultAuth;
     const compAuthEl = document.getElementById('itau-comp-auth');
     if (compAuthEl) compAuthEl.innerText = authFull;
     
     const compIdEl = document.getElementById('itau-comp-id');
     if (compIdEl) compIdEl.innerText = transId || ('E60701190202610011626DY5W' + Math.random().toString(36).substring(2, 9).toUpperCase());
 
-    const randomControl = Math.floor(100000000000000 + Math.random() * 900000000000000).toString();
+    const defaultControl = Math.floor(100000000000000 + Math.random() * 900000000000000).toString();
+    const controlVal = customControl || defaultControl;
     const compControlEl = document.getElementById('itau-comp-control');
-    if (compControlEl) compControlEl.innerText = randomControl;
+    if (compControlEl) compControlEl.innerText = controlVal;
 }
 
 function switchReceiptModel(model) {

@@ -873,6 +873,8 @@
                             <option value="Santander">Santander</option>
                             <option value="Inter">Banco Inter</option>
                             <option value="C6 Bank">C6 Bank</option>
+                            <option value="PicPay">PicPay</option>
+                            <option value="CORA SCFI">CORA SCFI</option>
                         </select>
                     </div>
 
@@ -898,6 +900,30 @@
                     <div class="config-field">
                         <label>Sua Agência e Conta (Origem)</label>
                         <input type="text" id="input-transfer-orig-agency-account" class="config-input" value="8668/0099853-0">
+                    </div>
+
+                    <div class="config-field">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                            <label style="margin-bottom: 0;">ID da Transação (Opcional)</label>
+                            <span id="btn-gen-txid" style="font-size: 11px; color: var(--nu-purple); font-weight: 600; cursor: pointer;">Gerar aleatório</span>
+                        </div>
+                        <input type="text" id="input-transfer-txid" class="config-input" placeholder="Ex: E60701190202610011626DY5W16MDU59">
+                    </div>
+
+                    <div class="config-field">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                            <label style="margin-bottom: 0;">Código de Autenticação (Opcional)</label>
+                            <span id="btn-gen-auth" style="font-size: 11px; color: var(--nu-purple); font-weight: 600; cursor: pointer;">Gerar aleatório</span>
+                        </div>
+                        <input type="text" id="input-transfer-auth" class="config-input" placeholder="Ex: 155E41B2CAC12EB82A7C83CAD2E4BAAE44960B68">
+                    </div>
+
+                    <div class="config-field">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                            <label style="margin-bottom: 0;">Controle (Opcional)</label>
+                            <span id="btn-gen-control" style="font-size: 11px; color: var(--nu-purple); font-weight: 600; cursor: pointer;">Gerar aleatório</span>
+                        </div>
+                        <input type="text" id="input-transfer-control" class="config-input" placeholder="Ex: 000790065161164">
                     </div>
 
                     <div class="config-field">
