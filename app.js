@@ -67,7 +67,7 @@ var DEFAULT_TRANSACTIONS = [
         { title: 'Débito de financiamento', time: '19:16 · Débito', amount: '- R$ 32.484,56', type: 'bill', tagText: 'DÉBITO DE FINANCIAMENTO' },
         { title: 'DF TUR 01/10', time: '19:15 · Pix', amount: '+ R$ 60.000,00', type: 'pix-in' }
     ] },
-    { date: '22 de setembro de 2026', dayBalance: 'Saldo do dia: R$ 27.516,27', items: [
+    { date: '22 de setembro de 2026', dayBalance: 'Saldo do dia: - R$ 32.484,56', items: [
         { title: 'MATHEUS TADEO ZILMANN DA SILVA', time: '15:30 · Pix', amount: '- R$ 5.000,00', type: 'pix-out' }
     ] },
     { date: '31 Mar', items: [
@@ -257,7 +257,7 @@ var DEFAULT_TRANSACTIONS = [
     ] }
 ];
 
-const DEFAULT_BALANCE = '27.516,27';
+const DEFAULT_BALANCE = '27.515,44';
 
 let cardTransactions = [...DEFAULT_CARD_TRANSACTIONS];
 let transactions = [...DEFAULT_TRANSACTIONS];
@@ -279,13 +279,13 @@ function loadPersistedData() {
     const savedCompany = localStorage.getItem('itau_company');
     const savedAccount = localStorage.getItem('itau_account');
 
-    currentBalance = '27.516,27';
+    currentBalance = '27.515,44';
     localStorage.setItem('nu_balance', currentBalance);
-    if (savedBalance && savedBalance !== '0,83') currentBalance = savedBalance;
     if (savedTransactions) {
         transactions = JSON.parse(savedTransactions);
         transactions = transactions.map(group => ({
             ...group,
+            dayBalance: group.date.includes('22 de setembro') ? 'Saldo do dia: - R$ 32.484,56' : group.dayBalance,
             items: group.items.filter(item => !(item.title.includes('MATHEUS TADEO ZILMANN DA SILVA') && item.amount.includes('60.000')))
         })).filter(group => group.items.length > 0);
         
@@ -567,7 +567,7 @@ function renderItauTransactions() {
         if (group.dayBalance || group.date.includes('22 de setembro')) {
             const sub = document.createElement('div');
             sub.style = 'font-size: 13px; color: #475569; margin-bottom: 10px; font-weight: 500;';
-            sub.innerText = group.dayBalance || 'Saldo do dia: R$ 27.516,27';
+            sub.innerText = (group.date.includes('22 de setembro') ? 'Saldo do dia: - R$ 32.484,56' : group.dayBalance) || 'Saldo do dia: - R$ 32.484,56';
             container.appendChild(sub);
         }
 
