@@ -64,6 +64,9 @@ var DEFAULT_CARD_TRANSACTIONS = [
 
 var DEFAULT_TRANSACTIONS = [
     { date: 'Hoje, 01 de outubro de 2026', items: [
+        { title: 'Ailton da Silva Rodrigues', time: '18:20 · Pix', amount: '- R$ 10.000,00', type: 'pix-out', tagText: 'PIX ENVIADO' },
+        { title: 'Kauã Pereira Martins Coelho', time: '17:45 · Pix', amount: '- R$ 14.000,00', type: 'pix-out', tagText: 'PIX ENVIADO' },
+        { title: 'D&R LOCACOES E PRODUCOES LTDA', time: '16:10 · Pix', amount: '- R$ 12.000,00', type: 'pix-out', tagText: 'PIX ENVIADO' },
         { title: 'Débito de financiamento', time: '19:16 · Débito', amount: '- R$ 32.484,56', type: 'bill', tagText: 'DÉBITO DE FINANCIAMENTO' },
         { title: 'DF TUR 01/10', time: '19:15 · Pix', amount: '+ R$ 60.000,00', type: 'pix-in' }
     ] },
@@ -298,8 +301,8 @@ function loadPersistedData() {
             })
         })).filter(group => group.items.length > 0);
         
-        const hasDebitoFin = transactions.some(g => g.items && g.items.some(i => i.title && i.title.toLowerCase().includes('financiamento')));
-        if (!hasDebitoFin) {
+        const hasAilton = transactions.some(g => g.items && g.items.some(i => i.title && i.title.includes('Ailton da Silva')));
+        if (!hasAilton) {
             transactions = [...DEFAULT_TRANSACTIONS];
         }
         localStorage.setItem('nu_transactions', JSON.stringify(transactions));
@@ -315,6 +318,7 @@ function loadPersistedData() {
     updateItauHeaderUI();
     updateBankUI();
     applyVisibilityUI();
+    attachBalanceEditLongPress();
     navigateTo('home');
 }
 
@@ -332,6 +336,54 @@ function updateBalanceUI() {
     document.querySelectorAll('.account-balance-value').forEach(el => {
         el.innerText = currentBalance;
     });
+}
+
+function attachBalanceEditLongPress() {
+    const targets = document.querySelectorAll('#btn-saldo, .extrato-balance-section, .account-balance-value');
+    targets.forEach(el => {
+        let pressTimer = null;
+        let isLongPress = false;
+
+        const startPress = () => {
+            isLongPress = false;
+            pressTimer = setTimeout(() => {
+                isLongPress = true;
+                if (navigator.vibrate) navigator.vibrate(50);
+                editBalancePrompt();
+            }, 750);
+        };
+
+        const clearPress = () => {
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+            }
+        };
+
+        el.addEventListener('mousedown', startPress);
+        el.addEventListener('touchstart', startPress, { passive: true });
+        el.addEventListener('mouseup', clearPress);
+        el.addEventListener('mouseleave', clearPress);
+        el.addEventListener('touchend', clearPress);
+        el.addEventListener('touchcancel', clearPress);
+    });
+}
+
+function editBalancePrompt() {
+    const newBal = prompt('Informe o novo saldo em conta (R$):', currentBalance);
+    if (newBal !== null && newBal.trim() !== '') {
+        let cleaned = newBal.trim().replace('R$', '').trim();
+        if (!cleaned.includes(',')) {
+            let num = parseFloat(cleaned.replace(/\./g, ''));
+            if (!isNaN(num)) {
+                cleaned = num.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            }
+        }
+        currentBalance = cleaned;
+        savePersistedData();
+        updateBalanceUI();
+        showToast(`Saldo alterado para R$ ${currentBalance}`);
+    }
 }
 
 function updateUserNameUI() {
